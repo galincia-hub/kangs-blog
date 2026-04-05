@@ -1,5 +1,30 @@
-/* ===== NAV TOGGLE ===== */
+/* ===== DARK MODE ===== */
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const theme = saved || system;
+  document.documentElement.setAttribute('data-theme', theme);
+  _updateThemeIcon(theme);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  _updateThemeIcon(next);
+}
+
+function _updateThemeIcon(theme) {
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+/* ===== NAV ===== */
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+
+  // Mobile nav toggle
   const toggle = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
   if (toggle && links) {
@@ -12,7 +37,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const href = a.getAttribute('href').split('/').pop() || 'index.html';
     if (href === currentPath) a.classList.add('active');
   });
+
+  // TOC (runs only on post pages)
+  initTOC();
 });
+
+/* ===== TOC ===== */
+function initTOC() {
+  const tocNav = document.getElementById('toc-nav');
+  if (!tocNav) return;
+  const headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length === 0) return;
+
+  const items = [];
+  headings.forEach((h, i) => {
+    if (!h.id) h.id = 'h-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link toc-' + h.tagName.toLowerCase();
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // offset for sticky nav
+      setTimeout(() => window.scrollBy(0, -72), 350);
+    });
+    tocNav.appendChild(a);
+    items.push({ el: h, link: a });
+  });
+
+  // Scroll spy
+  let active = null;
+  const onScroll = () => {
+    const scrollY = window.scrollY + 100;
+    let current = items[0];
+    for (const item of items) {
+      if (item.el.getBoundingClientRect().top + window.scrollY <= scrollY) current = item;
+    }
+    if (current !== active) {
+      if (active) active.link.classList.remove('active');
+      current.link.classList.add('active');
+      active = current;
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
 
 /* ===== BLOG CARDS LOADER ===== */
 async function loadPosts(options = {}) {
@@ -21,7 +91,6 @@ async function loadPosts(options = {}) {
     const res = await fetch(postsPath);
     const posts = await res.json();
     const filtered = filter === '전체' ? posts : posts.filter(p => p.category.includes(filter));
-    // Pinned first
     filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || new Date(b.date) - new Date(a.date));
     if (container) renderCards(container, filtered.slice(0, limit));
     if (listContainer) {
