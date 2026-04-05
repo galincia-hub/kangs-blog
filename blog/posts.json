@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "week1-cruisestudio-시작",
+    "title": "Week 1: CruiseStudio 파이프라인의 시작",
+    "date": "2026-02-11",
+    "category": ["AI 활용기", "작업일지"],
+    "pinned": true,
+    "excerpt": "구정 연휴에 시작한 실험 — 유튜브 스크립트를 블로그 포스팅으로 자동 변환하는 파이프라인을 만들어봤다.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#CruiseAI", "#빌드인퍼블릭", "#여행업AI"]
+  }
+]

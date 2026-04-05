@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>블로그 — Pagery</title>
+  <meta name="description" content="여행업 AI 전환 실행자 파게리의 빌드 로그. AI 활용기, 크루즈 인사이트, 작업일지.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Pagery</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">블로그</a></li>
+      <li><a href="../portfolio.html">포트폴리오</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="메뉴">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background: var(--bg-subtle); padding: 4rem 0 3rem; border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <span class="hero-eyebrow">Blog</span>
+    <h1 style="margin-top: 0.75rem;">빌드 로그</h1>
+    <p style="max-width: 500px; margin-top: 0.75rem;">AI로 실제 사업 시스템을 만들어가는 솔직한 기록. 주 1회 업데이트.</p>
+  </div>
+</section>
+
+<!-- BLOG MAIN -->
+<section>
+  <div class="container">
+    <!-- 카테고리 필터 -->
+    <div class="cat-filter">
+      <button class="cat-btn active" data-cat="전체">전체</button>
+      <button class="cat-btn" data-cat="AI 활용기">AI 활용기</button>
+      <button class="cat-btn" data-cat="크루즈 인사이트">크루즈 인사이트</button>
+      <button class="cat-btn" data-cat="작업일지">작업일지</button>
+      <button class="cat-btn" data-cat="포트폴리오">포트폴리오</button>
+    </div>
+
+    <!-- 카드 9개 -->
+    <div class="cards-grid" id="blog-cards"></div>
+
+    <!-- 리스트 -->
+    <div id="blog-list" class="post-list" style="margin-top: 3rem;"></div>
+    <div class="load-more-wrap" style="display:none;">
+      <button class="btn btn-outline btn-load-more">더보기 (5개씩)</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
+    <div class="footer-links">
+      <a href="index.html">블로그</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  const cardsEl = document.getElementById('blog-cards');
+  const listEl = document.getElementById('blog-list');
+  loadPosts({ container: cardsEl, limit: 9, listContainer: listEl, listLimit: 5, postsPath: '../blog/posts.json' }).then(() => {
+    initCatFilter({ cardsContainer: cardsEl, listContainer: listEl, postsPath: '../blog/posts.json', listLimit: 5 });
+    initLoadMore(listEl, 5);
+  });
+</script>
+</body>
+</html>
