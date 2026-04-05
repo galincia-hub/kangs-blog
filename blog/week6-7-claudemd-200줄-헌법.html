@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLAUDE.md는 200줄 이내의 헌법이다 — Pagery</title>
+  <meta name="description" content="CLAUDE.md가 364줄까지 불어났다. 토큰이 낭비됐고 AI가 느려졌다. 200줄 원칙으로 다이어트한 과정.">
+  <meta property="og:title" content="Week 6~7: CLAUDE.md는 200줄 이내의 헌법이다">
+  <meta property="og:description" content="CLAUDE.md가 364줄까지 불어났다. 토큰이 낭비됐고 AI가 느려졌다. 200줄 원칙으로 다이어트한 과정.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Week 6~7: CLAUDE.md는 200줄 이내의 헌법이다",
+      "author": { "@type": "Person", "name": "Pagery" },
+      "datePublished": "2026-04-05",
+      "description": "CLAUDE.md가 364줄까지 불어났다. 토큰이 낭비됐고 AI가 느려졌다. 200줄 원칙으로 다이어트한 과정."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://kangs-blog.com" },
+        { "@type": "ListItem", "position": 2, "name": "블로그", "item": "https://kangs-blog.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Week 6~7: CLAUDE.md는 200줄 이내의 헌법이다", "item": "https://kangs-blog.com/blog/week6-7-claudemd-200줄-헌법.html" }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Pagery</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">블로그</a></li>
+      <li><a href="../portfolio.html">포트폴리오</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="메뉴"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="post-hero">
+  <div class="container" style="max-width: 740px;">
+    <div class="post-breadcrumb">
+      <a href="../index.html">홈</a><span>›</span>
+      <a href="index.html">블로그</a><span>›</span>
+      AI 활용기
+    </div>
+    <div class="card-cats" style="margin-bottom: 0.75rem;">
+      <span class="card-cat">AI 활용기</span>
+    </div>
+    <h1 class="post-title">Week 6~7: CLAUDE.md는 200줄 이내의 헌법이다</h1>
+    <div class="post-meta-row">
+      <span style="font-size: 0.88rem; color: var(--sub);">Pagery</span>
+      <span style="font-size: 0.88rem; color: var(--sub);">2026년 4월 5일</span>
+      <div class="post-tags">
+        <span class="post-tag">#CLAUDE.md</span>
+        <span class="post-tag">#토큰최적화</span>
+        <span class="post-tag">#AI협업</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<article class="post-content">
+
+  <h2>이번 주에 뭘 했나</h2>
+  <p>
+    3월 31일부터 4월 5일. 이번 2주는 "토큰 최적화"가 주제였다. 그리고 이 블로그를 만들기 시작한 주이기도 하다.
+  </p>
+  <p>
+    CruiseStudio를 포함해 관리 중인 9개 프로젝트 전체에 <code>.claudeignore</code> 파일을 적용했다. CLAUDE.md를 364줄에서 189줄로 리팩토링했다. 전 프로젝트에 "Point, Don't Dump" 원칙을 적용했다 — 대용량 콘텐츠는 <code>docs/</code> 하위 파일로 분리하고 CLAUDE.md에는 참조만 남긴다. 그리고 2주 가오픈 스프린트 플랜도 작성했다.
+  </p>
+
+  <h2>어디서 막혔나</h2>
+  <p>
+    CLAUDE.md가 364줄까지 불어나 있었다. 언제부터인지 모르게 이런저런 규칙이 쌓였다. 처음엔 필요해서 추가한 것들인데, 나중엔 거의 안 쓰는 규칙들도 그냥 남아있었다.
+  </p>
+  <p>
+    문제는 Claude Code가 대화를 시작할 때 CLAUDE.md 전체를 읽는다는 거다. 364줄 = 읽는 데 쓰는 토큰이 그만큼 든다. 프로젝트가 9개면 그 9배다. 실제로 Claude Code 응답이 느려지기 시작했고, 불필요한 규칙에 걸려서 엉뚱한 답을 내놓는 경우도 생겼다.
+  </p>
+  <p>
+    규칙이 많을수록 좋은 게 아니었다. 규칙이 많을수록 AI가 헷갈린다.
+  </p>
+
+  <h2>어떻게 넘겼나</h2>
+  <p>
+    원칙을 세 가지로 정리했다. 첫째, <strong>200줄 이하 유지</strong>. 초과하면 별도 파일로 분리하고 참조만 남긴다. 둘째, <strong>검증 가능한 이진 체크</strong> — "이렇게 해줘"가 아니라 "이게 true인가 false인가"로 쓴다. 셋째, <strong>docs/ 분리 구조</strong> — 길고 상세한 내용은 <code>docs/</code>에 두고 CLAUDE.md에는 경로만.
+  </p>
+  <p>
+    364줄 → 189줄. 거의 절반이 날아갔다. 근데 Claude Code가 오히려 더 정확하게 동작했다. 필요한 것만 읽으니까.
+  </p>
+  <p>
+    <code>.claudeignore</code>도 마찬가지다. node_modules, 로그 파일, 빌드 결과물 — 이걸 무시하도록 설정하면 Claude Code가 쓸데없는 파일을 읽지 않는다. 당연한 것 같은데, 9개 프로젝트 중 설정한 곳이 없었다.
+  </p>
+
+  <h2>뭘 배웠나</h2>
+  <blockquote>
+    "CLAUDE.md는 200줄 이내의 헌법이지, 백과사전이 아니다."
+  </blockquote>
+  <p>
+    헌법은 짧다. 모든 경우를 다 다루지 않는다. 원칙만 담는다. 세부 법령은 따로 있다. CLAUDE.md도 그래야 한다. 핵심 규칙 20개를 명확하게 쓰는 게, 모호한 규칙 100개를 쓰는 것보다 낫다.
+  </p>
+  <p>
+    9주 동안 만들어온 것들을 정리하면서, 다음 단계 — 가오픈 스프린트 — 를 준비하게 됐다. 이 블로그도 그 준비의 일부다. 만들어가는 과정을 기록하는 것. 나도 모르지만 해보니까 됐다는 걸 계속 증명하는 것.
+  </p>
+
+  <h2>더 보기</h2>
+  <ul>
+    <li><a href="https://github.com/galincia-hub/CruiseStudio" target="_blank" style="color: var(--accent);">GitHub — CruiseStudio →</a></li>
+    <li><a href="https://galincia-hub.github.io/dev-hub" target="_blank" style="color: var(--accent);">dev-hub — 전체 시스템 진척도 →</a></li>
+    <li><a href="../about.html" style="color: var(--accent);">파게리가 누구냐면 →</a></li>
+  </ul>
+
+</article>
+
+<section class="post-related">
+  <div class="container">
+    <h3 style="margin-bottom: 1.5rem;">관련 글</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
+    <div class="footer-links">
+      <a href="index.html">블로그</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  loadPosts({ postsPath: '../blog/posts.json' }).then(posts => {
+    const related = posts.filter(p => p.slug !== 'week6-7-claudemd-200줄-헌법').slice(0, 4);
+    const grid = document.getElementById('related-grid');
+    if (related.length > 0 && grid) grid.innerHTML = related.map(p => cardHTMLRelative(p, '../')).join('');
+  });
+</script>
+</body>
+</html>

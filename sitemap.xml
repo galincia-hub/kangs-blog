@@ -20,13 +20,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <!-- 블로그 글 추가 시 아래 형식으로 추가 -->
-  <!--
   <url>
-    <loc>https://kangs-blog.com/blog/[slug].html</loc>
-    <lastmod>[YYYY-MM-DD]</lastmod>
+    <loc>https://kangs-blog.com/blog/week6-7-claudemd-200줄-헌법.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
-  -->
+  <url>
+    <loc>https://kangs-blog.com/blog/week5-프레임워크-분석-이미-80프로.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kangs-blog.com/blog/week4-크루즈-운영매뉴얼-하루만에.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kangs-blog.com/blog/week3-seo-aeo-테스트-통과.html</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kangs-blog.com/blog/week2-claudemd가-진짜-메모리다.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kangs-blog.com/blog/week1-하루만에-5개-시스템.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kangs-blog.com/blog/pre-week-ai-시스템-시작.html</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>하루 만에 5개 시스템이 돌아가기 시작했다 — Pagery</title>
+  <meta name="description" content="2/28의 빅뱅. CruiseStudio, CruiseKMS, CruiseMD, cruise-site, 5개 시스템이 하루 만에 가동된 날의 기록.">
+  <meta property="og:title" content="Week 1: 하루 만에 5개 시스템이 돌아가기 시작했다">
+  <meta property="og:description" content="2/28의 빅뱅. CruiseStudio, CruiseKMS, CruiseMD, cruise-site, 5개 시스템이 하루 만에 가동된 날의 기록.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Week 1: 하루 만에 5개 시스템이 돌아가기 시작했다",
+      "author": { "@type": "Person", "name": "Pagery" },
+      "datePublished": "2026-03-02",
+      "description": "2/28의 빅뱅. CruiseStudio, CruiseKMS, CruiseMD, cruise-site, 5개 시스템이 하루 만에 가동된 날의 기록."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://kangs-blog.com" },
+        { "@type": "ListItem", "position": 2, "name": "블로그", "item": "https://kangs-blog.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Week 1: 하루 만에 5개 시스템이 돌아가기 시작했다", "item": "https://kangs-blog.com/blog/week1-하루만에-5개-시스템.html" }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Pagery</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">블로그</a></li>
+      <li><a href="../portfolio.html">포트폴리오</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="메뉴"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="post-hero">
+  <div class="container" style="max-width: 740px;">
+    <div class="post-breadcrumb">
+      <a href="../index.html">홈</a><span>›</span>
+      <a href="index.html">블로그</a><span>›</span>
+      AI 활용기
+    </div>
+    <div class="card-cats" style="margin-bottom: 0.75rem;">
+      <span class="card-cat">AI 활용기</span>
+      <span class="card-cat">작업일지</span>
+    </div>
+    <h1 class="post-title">Week 1: 하루 만에 5개 시스템이 돌아가기 시작했다</h1>
+    <div class="post-meta-row">
+      <span style="font-size: 0.88rem; color: var(--sub);">Pagery</span>
+      <span style="font-size: 0.88rem; color: var(--sub);">2026년 3월 2일</span>
+      <div class="post-tags">
+        <span class="post-tag">#CruiseAI</span>
+        <span class="post-tag">#CruiseStudio</span>
+        <span class="post-tag">#빌드인퍼블릭</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<article class="post-content">
+
+  <h2>이번 주에 뭘 했나</h2>
+  <p>
+    2월 28일, 3월 1일, 3월 2일. 딱 3일이다. 근데 이 3일에 생긴 일이 지금까지 이어지는 것들의 거의 전부다.
+  </p>
+  <p>
+    2/28 하루에만 이게 다 생겼다: CruiseStudio Jane 스타일 프로필 완성, CruiseKMS 포시즌스 6개 + 오세아니아 11개 문서 생성, Cruise Specialists 비즈니스 모델 분석, 5-시스템 아키텍처 확정. 그리고 3/1~2에 CruiseMD 전체 파이프라인 구현 — PDF 파싱, 스켈레톤 등록, 상품카드 v2, 필터 UI. 동시에 cruise.co.kr React 목업 5개 파일도 완성됐다.
+  </p>
+  <p>
+    숫자로 보면: 17개 KMS 문서, 5개 사이트 목업, 파이프라인 코드 여러 개. 3일 만에.
+    50대 직장인이 퇴근 후 밤에 만든 거다.
+  </p>
+
+  <h2>어디서 막혔나</h2>
+  <p>
+    CruiseMD 설계서 v1.0 리뷰에서 발목을 잡혔다. Claude Code가 설계서를 읽고도 코드를 제대로 못 뱉어냈다. "도메인 분석 90점, 구현 명세 50점" 문제였다.
+  </p>
+  <p>
+    내가 작성한 설계서는 크루즈 프로모션 이메일의 특성을 아주 잘 설명하고 있었다. 이메일 타입 A~E 분류, 파싱 로직의 방향성, 비즈니스 로직까지. 근데 Claude Code가 "그래서 departure_date는 어디 있어요?" "Product Card 스키마는 어떻게 생겼어요?"라고 계속 물어봤다.
+  </p>
+  <p>
+    AI에게 "이 방향으로 짜"라고 하면 안 되고, "이 구조로 이 필드로 짜"라고 해야 한다는 걸 처음 알았다.
+  </p>
+
+  <h2>어떻게 넘겼나</h2>
+  <p>
+    Blocker 4개를 명확하게 정의하고 하나씩 해결했다. <code>departure_date</code> 필드 추가, Product Card 스키마 정의, 최소 CLAUDE.md 작성, 이메일 타입별 파서 우선순위 확정.
+  </p>
+  <p>
+    이걸 정리하고 나서야 Claude Code가 제대로 돌아가기 시작했다. 설계서를 고친 게 아니라, Claude Code가 실행할 수 있는 수준의 명세를 추가한 것이다. 1시간 작업이 막힌 걸 이 정리로 30분 만에 뚫었다.
+  </p>
+
+  <h2>뭘 배웠나</h2>
+  <blockquote>
+    "도메인 분석이 90점이어도 구현 명세가 50점이면 Claude Code에서 바로 돌릴 수 없다."
+  </blockquote>
+  <p>
+    Claude Code는 내 머릿속을 못 읽는다. 당연한 말인데 실제로 부딪혀봐야 안다. 설계 문서는 사람이 읽는 문서와 AI가 실행하는 명세가 달라야 한다. 이걸 2월 28일에 배웠다.
+  </p>
+
+  <h2>더 보기</h2>
+  <ul>
+    <li><a href="https://github.com/galincia-hub/CruiseStudio" target="_blank" style="color: var(--accent);">GitHub — CruiseStudio →</a></li>
+    <li><a href="https://github.com/galincia-hub/CruiseMD" target="_blank" style="color: var(--accent);">GitHub — CruiseMD →</a></li>
+    <li><a href="week2-claudemd가-진짜-메모리다.html" style="color: var(--accent);">다음 글: Week 2 — CLAUDE.md가 진짜 메모리다 →</a></li>
+  </ul>
+
+</article>
+
+<section class="post-related">
+  <div class="container">
+    <h3 style="margin-bottom: 1.5rem;">관련 글</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
+    <div class="footer-links">
+      <a href="index.html">블로그</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  loadPosts({ postsPath: '../blog/posts.json' }).then(posts => {
+    const related = posts.filter(p => p.slug !== 'week1-하루만에-5개-시스템').slice(0, 4);
+    const grid = document.getElementById('related-grid');
+    if (related.length > 0 && grid) grid.innerHTML = related.map(p => cardHTMLRelative(p, '../')).join('');
+  });
+</script>
+</body>
+</html>

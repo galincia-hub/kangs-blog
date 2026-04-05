@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLAUDE.md가 진짜 메모리다 — Pagery</title>
+  <meta name="description" content="회사에서 작업하고 집에서 이어받으려니 AI가 아무것도 기억 못한다. 그 문제를 해결한 방법 — CLAUDE.md와 Git.">
+  <meta property="og:title" content="Week 2: CLAUDE.md가 진짜 메모리다">
+  <meta property="og:description" content="회사에서 작업하고 집에서 이어받으려니 AI가 아무것도 기억 못한다. 그 문제를 해결한 방법 — CLAUDE.md와 Git.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Week 2: CLAUDE.md가 진짜 메모리다",
+      "author": { "@type": "Person", "name": "Pagery" },
+      "datePublished": "2026-03-09",
+      "description": "회사에서 작업하고 집에서 이어받으려니 AI가 아무것도 기억 못한다. 그 문제를 해결한 방법 — CLAUDE.md와 Git."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://kangs-blog.com" },
+        { "@type": "ListItem", "position": 2, "name": "블로그", "item": "https://kangs-blog.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Week 2: CLAUDE.md가 진짜 메모리다", "item": "https://kangs-blog.com/blog/week2-claudemd가-진짜-메모리다.html" }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Pagery</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">블로그</a></li>
+      <li><a href="../portfolio.html">포트폴리오</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="메뉴"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="post-hero">
+  <div class="container" style="max-width: 740px;">
+    <div class="post-breadcrumb">
+      <a href="../index.html">홈</a><span>›</span>
+      <a href="index.html">블로그</a><span>›</span>
+      AI 활용기
+    </div>
+    <div class="card-cats" style="margin-bottom: 0.75rem;">
+      <span class="card-cat">AI 활용기</span>
+      <span class="card-cat">작업일지</span>
+    </div>
+    <h1 class="post-title">Week 2: CLAUDE.md가 진짜 메모리다</h1>
+    <div class="post-meta-row">
+      <span style="font-size: 0.88rem; color: var(--sub);">Pagery</span>
+      <span style="font-size: 0.88rem; color: var(--sub);">2026년 3월 9일</span>
+      <div class="post-tags">
+        <span class="post-tag">#CLAUDE.md</span>
+        <span class="post-tag">#Git</span>
+        <span class="post-tag">#AI협업</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<article class="post-content">
+
+  <h2>이번 주에 뭘 했나</h2>
+  <p>
+    이번 주(3/3~3/9)는 인프라 정비 주간이었다. Ruby/Jekyll 설치 후 로컬 빌드 확인, Netlify 배포, Streamlit 대시보드 5개 탭 구현. dev-hub GitHub Pages 배포도 이번 주다. 그리고 가장 큰 수확 — GitHub 백업 체계 구축. CruiseMD, CruiseStudio, CruiseKMS, CruiseDB 4개 리포지토리를 한꺼번에 GitHub에 올렸다.
+  </p>
+  <p>
+    겉으로 보면 "인프라 정비"인데, 사실 이번 주 핵심은 하나였다. <strong>Claude Code 프로젝트 메모리가 로컬 PC에만 저장된다는 걸 알게 된 것.</strong>
+  </p>
+
+  <h2>어디서 막혔나</h2>
+  <p>
+    나는 회사에서도 작업하고, 집에서도 작업한다. Claude Code의 프로젝트 메모리가 <code>~/.claude/</code> 폴더 — PC 로컬에 저장된다는 걸 모르고 있었다.
+  </p>
+  <p>
+    회사에서 Claude Code에게 "이 프로젝트는 이런 구조야, 이 규칙을 따라줘"라고 가르쳤다. 그리고 집에서 같은 프로젝트를 열었더니 Claude Code가 아무것도 모른다. 처음 본 프로젝트처럼 행동한다.
+  </p>
+  <p>
+    이걸 고치려고 처음엔 클라우드 동기화를 생각했다. 근데 <code>~/.claude/</code> 폴더를 동기화하면 여러 문제가 생길 수 있다. 더 근본적인 해결이 필요했다.
+  </p>
+
+  <h2>어떻게 넘겼나</h2>
+  <p>
+    CLAUDE.md 파일이 답이었다. 프로젝트 루트에 CLAUDE.md를 두면 Claude Code가 대화를 시작할 때 항상 읽는다. 이 파일을 Git으로 관리하면 — 회사에서 <code>git push</code>, 집에서 <code>git pull</code> — 두 환경에서 동일한 규칙을 쓸 수 있다.
+  </p>
+  <p>
+    여기서부터 루틴이 생겼다: <strong>작업 시작 → git pull / 작업 종료 → git push.</strong> 이게 전부다. 클라우드 구독 필요 없고, 복잡한 동기화 도구 필요 없다.
+  </p>
+  <p>
+    CLAUDE.md에는 프로젝트 구조, 코딩 규칙, 금지사항, 자주 쓰는 명령어를 적어뒀다. 이게 사실상 AI와 나 사이의 "업무 계약서"다.
+  </p>
+
+  <h2>뭘 배웠나</h2>
+  <blockquote>
+    "CLAUDE.md = 진짜 메모리. Git으로 동기화되는 이것이 회사/집 공유의 핵심."
+  </blockquote>
+  <p>
+    AI는 기억을 못한다. 대화가 끝나면 끝이다. 근데 CLAUDE.md는 항상 남아있다. 파일이니까. 그래서 중요한 규칙은 대화로 가르치지 말고 파일에 써두는 게 맞다. 한 번 쓰면 어디서나 쓸 수 있다.
+  </p>
+
+  <h2>더 보기</h2>
+  <ul>
+    <li><a href="https://github.com/galincia-hub/dev-hub" target="_blank" style="color: var(--accent);">GitHub — dev-hub 대시보드 →</a></li>
+    <li><a href="https://galincia-hub.github.io/dev-hub" target="_blank" style="color: var(--accent);">dev-hub 라이브 →</a></li>
+    <li><a href="week3-seo-aeo-테스트-통과.html" style="color: var(--accent);">다음 글: Week 3 — SEO+AEO 테스트 30개 FAIL 0 →</a></li>
+  </ul>
+
+</article>
+
+<section class="post-related">
+  <div class="container">
+    <h3 style="margin-bottom: 1.5rem;">관련 글</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
+    <div class="footer-links">
+      <a href="index.html">블로그</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  loadPosts({ postsPath: '../blog/posts.json' }).then(posts => {
+    const related = posts.filter(p => p.slug !== 'week2-claudemd가-진짜-메모리다').slice(0, 4);
+    const grid = document.getElementById('related-grid');
+    if (related.length > 0 && grid) grid.innerHTML = related.map(p => cardHTMLRelative(p, '../')).join('');
+  });
+</script>
+</body>
+</html>

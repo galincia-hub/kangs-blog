@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>외부 프레임워크를 분석했더니 이미 80% 하고 있었다 — Pagery</title>
+  <meta name="description" content="하네스 엔지니어링 프레임워크를 분석했다. 거창한 새 도구인 줄 알았는데 우리가 이미 80% 구현하고 있었다.">
+  <meta property="og:title" content="Week 5: 외부 프레임워크를 분석했더니 이미 80% 하고 있었다">
+  <meta property="og:description" content="하네스 엔지니어링 프레임워크를 분석했다. 거창한 새 도구인 줄 알았는데 우리가 이미 80% 구현하고 있었다.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Week 5: 외부 프레임워크를 분석했더니 이미 80% 하고 있었다",
+      "author": { "@type": "Person", "name": "Pagery" },
+      "datePublished": "2026-03-30",
+      "description": "하네스 엔지니어링 프레임워크를 분석했다. 거창한 새 도구인 줄 알았는데 우리가 이미 80% 구현하고 있었다."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://kangs-blog.com" },
+        { "@type": "ListItem", "position": 2, "name": "블로그", "item": "https://kangs-blog.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Week 5: 외부 프레임워크를 분석했더니 이미 80% 하고 있었다", "item": "https://kangs-blog.com/blog/week5-프레임워크-분석-이미-80프로.html" }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Pagery</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">블로그</a></li>
+      <li><a href="../portfolio.html">포트폴리오</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="메뉴"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="post-hero">
+  <div class="container" style="max-width: 740px;">
+    <div class="post-breadcrumb">
+      <a href="../index.html">홈</a><span>›</span>
+      <a href="index.html">블로그</a><span>›</span>
+      AI 활용기
+    </div>
+    <div class="card-cats" style="margin-bottom: 0.75rem;">
+      <span class="card-cat">AI 활용기</span>
+      <span class="card-cat">작업일지</span>
+    </div>
+    <h1 class="post-title">Week 5: 외부 프레임워크를 분석했더니 이미 80% 하고 있었다</h1>
+    <div class="post-meta-row">
+      <span style="font-size: 0.88rem; color: var(--sub);">Pagery</span>
+      <span style="font-size: 0.88rem; color: var(--sub);">2026년 3월 30일</span>
+      <div class="post-tags">
+        <span class="post-tag">#하네스엔지니어링</span>
+        <span class="post-tag">#AI시스템</span>
+        <span class="post-tag">#빌드인퍼블릭</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<article class="post-content">
+
+  <h2>이번 주에 뭘 했나</h2>
+  <p>
+    3월 24일부터 30일. 이번 주는 "하네스 엔지니어링" 프레임워크를 분석했다. CLAUDE.md 기반 에이전트 설계론인데, AI 에이전트 시스템을 어떻게 설계해야 하는지 방법론을 정리한 것이다. 읽어봤더니 — 흥미로운 결과가 나왔다.
+  </p>
+  <p>
+    동시에 cruise-ops-desk v3.0 작업도 병행했다. 대안A 계층형 구조 확정, 팀별 워크스페이스 분리, 코스타 세레나 조직도 v4 최종 확정까지.
+  </p>
+
+  <h2>어디서 막혔나</h2>
+  <p>
+    막힌 게 아니라 놀란 거다. 하네스 엔지니어링 프레임워크를 처음 접했을 때 "이걸 다 도입해야 하나?" 싶었다. 에이전트 역할 분리, 피드백 루프, 다관점 검증 — 용어들이 복잡해 보였다.
+  </p>
+  <p>
+    근데 분석하면서 현재 내 시스템이랑 하나하나 매핑해봤더니 — 이미 80%는 하고 있었다. CruiseStudio의 Writer→Reviewer→Style→SEO 파이프라인이 에이전트 역할 분리다. CLAUDE.md가 에이전트 컨텍스트 관리다. CruiseKMS가 지식 베이스다.
+  </p>
+
+  <h2>어떻게 넘겼나</h2>
+  <p>
+    나머지 20%를 확인했다. 부족한 건 두 가지였다. 첫째, <strong>피드백 축적 루프</strong> — Reviewer가 남긴 피드백이 다음 Writer 실행에 자동으로 반영되지 않고 있었다. 둘째, <strong>다관점 검증</strong> — 한 에이전트가 쓰고 검토까지 하면 맹점이 생긴다.
+  </p>
+  <p>
+    해결 방향을 설계했다. <code>/learnings/</code> 폴더에 Reviewer 피드백을 자동 저장하고, 다음 Writer 실행 시 그걸 참조하는 구조. 구현은 CruiseStudio Phase 1에 통합하기로 했다.
+  </p>
+  <p>
+    그리고 새 도구는 도입하지 않기로 했다. 있는 것부터 완성하는 게 먼저다.
+  </p>
+
+  <h2>뭘 배웠나</h2>
+  <blockquote>
+    외부 프레임워크를 분석할 때 "우리가 이미 하고 있는 것"을 먼저 매핑하면 불필요한 도구 도입을 방지할 수 있다.
+  </blockquote>
+  <p>
+    새로운 방법론이나 도구가 나오면 "이걸 다 써야 하나" 하는 압박이 온다. AI 세계에서는 특히 심하다. 매일 새로운 게 나온다. 근데 매핑부터 하면 — 실제로 필요한 게 뭔지 보인다. 그리고 대부분은 이미 하고 있다.
+  </p>
+
+  <h2>더 보기</h2>
+  <ul>
+    <li><a href="https://galincia-hub.github.io/cruise-ops-desk" target="_blank" style="color: var(--accent);">cruise-ops-desk v3.0 →</a></li>
+    <li><a href="week6-7-claudemd-200줄-헌법.html" style="color: var(--accent);">다음 글: Week 6~7 — CLAUDE.md는 200줄 이내의 헌법이다 →</a></li>
+  </ul>
+
+</article>
+
+<section class="post-related">
+  <div class="container">
+    <h3 style="margin-bottom: 1.5rem;">관련 글</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
+    <div class="footer-links">
+      <a href="index.html">블로그</a>
+      <a href="../portfolio.html">포트폴리오</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  loadPosts({ postsPath: '../blog/posts.json' }).then(posts => {
+    const related = posts.filter(p => p.slug !== 'week5-프레임워크-분석-이미-80프로').slice(0, 4);
+    const grid = document.getElementById('related-grid');
+    if (related.length > 0 && grid) grid.innerHTML = related.map(p => cardHTMLRelative(p, '../')).join('');
+  });
+</script>
+</body>
+</html>

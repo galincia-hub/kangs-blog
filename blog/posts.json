@@ -1,12 +1,72 @@
 [
   {
-    "slug": "week1-cruisestudio-시작",
-    "title": "Week 1: CruiseStudio 파이프라인의 시작",
-    "date": "2026-02-11",
-    "category": ["AI 활용기", "작업일지"],
+    "slug": "week6-7-claudemd-200줄-헌법",
+    "title": "Week 6~7: CLAUDE.md는 200줄 이내의 헌법이다",
+    "date": "2026-04-05",
+    "category": ["AI 활용기"],
     "pinned": true,
-    "excerpt": "구정 연휴에 시작한 실험 — 유튜브 스크립트를 블로그 포스팅으로 자동 변환하는 파이프라인을 만들어봤다.",
+    "excerpt": "CLAUDE.md가 364줄까지 불어났다. 규칙이 많을수록 AI가 헷갈린다는 걸 몸으로 배운 주간. 200줄 원칙으로 전 프로젝트를 다이어트했다.",
     "thumbnail": "../images/blog/pool/default-thumb.jpg",
-    "tags": ["#CruiseAI", "#빌드인퍼블릭", "#여행업AI"]
+    "tags": ["#CLAUDE.md", "#토큰최적화", "#AI협업"]
+  },
+  {
+    "slug": "week5-프레임워크-분석-이미-80프로",
+    "title": "Week 5: 외부 프레임워크를 분석했더니 이미 80% 하고 있었다",
+    "date": "2026-03-30",
+    "category": ["AI 활용기", "작업일지"],
+    "pinned": false,
+    "excerpt": "하네스 엔지니어링 프레임워크를 분석했다. 거창한 새 도구인 줄 알았는데 우리가 이미 80%는 구현하고 있었다. 도입 전에 매핑부터.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#하네스엔지니어링", "#AI시스템", "#빌드인퍼블릭"]
+  },
+  {
+    "slug": "week4-크루즈-운영매뉴얼-하루만에",
+    "title": "Week 4: 2,400명 크루즈 운영 매뉴얼을 하루 만에",
+    "date": "2026-03-23",
+    "category": ["크루즈 인사이트", "작업일지"],
+    "pinned": false,
+    "excerpt": "코스타 세레나 전세선 운영 매뉴얼 7종 28시트 111개 테이블. 하루 만에 만들고 웹사이트로 배포했다. AI 없이는 수주가 걸렸을 일이다.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#코스타세레나", "#크루즈운영", "#AI활용"]
+  },
+  {
+    "slug": "week3-seo-aeo-테스트-통과",
+    "title": "Week 3: AI가 쓴 글이 SEO+AEO 테스트를 통과한 순간",
+    "date": "2026-03-16",
+    "category": ["AI 활용기", "크루즈 인사이트"],
+    "pinned": false,
+    "excerpt": "30개 체크리스트, FAIL 0. AI가 쓴 크루즈 블로그 글이 SEO와 AEO 기준을 모두 통과했다. 가이드라인이 동작한다는 확신이 생긴 순간.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#SEO", "#AEO", "#CruiseStudio"]
+  },
+  {
+    "slug": "week2-claudemd가-진짜-메모리다",
+    "title": "Week 2: CLAUDE.md가 진짜 메모리다",
+    "date": "2026-03-09",
+    "category": ["AI 활용기", "작업일지"],
+    "pinned": false,
+    "excerpt": "회사에서 작업하고 집에서 이어받으려니 AI가 아무것도 기억 못한다. 그 문제를 CLAUDE.md와 Git으로 해결한 이야기.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#CLAUDE.md", "#Git", "#AI협업"]
+  },
+  {
+    "slug": "week1-하루만에-5개-시스템",
+    "title": "Week 1: 하루 만에 5개 시스템이 돌아가기 시작했다",
+    "date": "2026-03-02",
+    "category": ["AI 활용기", "작업일지"],
+    "pinned": false,
+    "excerpt": "2/28의 빅뱅. CruiseStudio, CruiseKMS, CruiseMD가 3일 만에 가동됐다. 설계 명세 50점짜리의 한계도 그날 처음 알았다.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#CruiseAI", "#CruiseStudio", "#빌드인퍼블릭"]
+  },
+  {
+    "slug": "pre-week-ai-시스템-시작",
+    "title": "Pre-Week: AI로 여행사 사업 시스템을 만들기로 한 날",
+    "date": "2026-02-27",
+    "category": ["AI 활용기", "작업일지"],
+    "pinned": false,
+    "excerpt": "23년차 여행사 직원이 AI 전환을 결심한 배경. 노션 AI 시스템이 오히려 나를 느리게 만들고 있었다는 걸 깨달은 순간.",
+    "thumbnail": "../images/blog/pool/default-thumb.jpg",
+    "tags": ["#CruiseAI", "#빌드인퍼블릭", "#Claude Code"]
   }
 ]
