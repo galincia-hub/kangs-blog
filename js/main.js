@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // TOC (runs only on post pages)
   initTOC();
+
+  // Reading time
+  initReadingTime();
 });
 
 /* ===== TOC ===== */
@@ -82,6 +85,19 @@ function initTOC() {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+}
+
+/* ===== READING TIME ===== */
+function initReadingTime() {
+  const content = document.querySelector('.post-content');
+  const metaRow = document.querySelector('.post-meta-row');
+  if (!content || !metaRow) return;
+  const words = content.innerText.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 220));
+  const span = document.createElement('span');
+  span.style.cssText = 'font-size:0.88rem;color:var(--sub);';
+  span.textContent = `읽는 시간 약 ${mins}분`;
+  metaRow.appendChild(span);
 }
 
 /* ===== BLOG CARDS LOADER ===== */
