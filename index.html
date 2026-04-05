@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagery — Building AI Systems for Travel Industry</title>
+  <title>Pagery — 여행업 AI 전환 기록</title>
   <meta name="description" content="여행업 23년 경력의 비전문가가 AI로 사업 시스템을 만들어가는 기록.">
-  <meta property="og:title" content="Pagery — Building AI Systems for Travel Industry">
+  <meta property="og:title" content="Pagery">
   <meta property="og:description" content="여행업 23년 경력의 비전문가가 AI로 사업 시스템을 만들어가는 기록.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script type="application/ld+json">
   {
@@ -19,127 +19,36 @@
     "name": "Pagery",
     "jobTitle": "Travel Industry AI Strategist",
     "description": "여행업 23년 경력, AI 시스템 직접 설계·구축",
-    "url": "https://kangs-blog.com",
-    "sameAs": [
-      "https://github.com/galincia-hub"
-    ]
+    "url": "https://kangs-blog.com"
   }
   </script>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
+<div class="page">
+  <nav class="site-nav">
     <a href="index.html" class="nav-logo">Pagery</a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">홈</a></li>
-      <li><a href="blog/index.html">블로그</a></li>
-      <li><a href="portfolio.html">포트폴리오</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
-      <button class="nav-toggle" aria-label="메뉴">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <span class="hero-eyebrow">50대 직딩의 강제 바이브코딩 생존기</span>
-    <h1>50대 직딩의<br>강제 바이브코딩 생존기</h1>
-    <p class="hero-sub">일반전화부터 AI까지, 모든 변화를 겪어온 70년대생 아저씨. 20대에 제로보드로 홈페이지 만들던 기억만 믿고, Claude Code로 다시 시작했습니다.</p>
-    <div class="hero-cta">
-      <a href="blog/index.html" class="btn btn-primary">블로그 읽기 →</a>
-      <a href="portfolio.html" class="btn btn-outline">포트폴리오 보기</a>
-    </div>
-  </div>
-</section>
-
-<!-- LATEST POSTS -->
-<section style="background: var(--bg-subtle);">
-  <div class="container">
-    <div class="section-header">
-      <h2>최신 글</h2>
-      <a href="blog/index.html">전체 보기 →</a>
-    </div>
-    <div class="cards-grid" id="home-cards">
-      <!-- JS로 로드 -->
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT STRIP -->
-<section class="about-strip">
-  <div class="container">
-    <div class="about-inner">
-      <div>
-        <span class="hero-eyebrow">About</span>
-        <h2 style="margin-top: 0.75rem;">여행업 AI 전환 실행자</h2>
-        <p style="margin: 1rem 0;">23년간 크루즈·여행업에 종사하면서 직접 AI 시스템을 설계하고 구축해왔습니다. 코딩 비전문가지만 Claude Code로 실제 작동하는 시스템을 만들고 있습니다.</p>
-        <div class="about-tags">
-          <span class="about-tag">크루즈 23년</span>
-          <span class="about-tag">AI 시스템 설계</span>
-          <span class="about-tag">Build in Public</span>
-          <span class="about-tag">Claude Code</span>
-        </div>
-        <a href="about.html" class="btn btn-outline" style="margin-top: 0.5rem;">더 알아보기 →</a>
-      </div>
-      <div>
-        <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem;">
-          <p style="font-size: 0.85rem; color: var(--sub); margin-bottom: 1rem;">현재 진행 중</p>
-          <div style="margin-bottom: 1.25rem;">
-            <div style="font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">🛳️ CruiseStudio AI</div>
-            <p style="font-size: 0.88rem;">크루즈 콘텐츠 자동화 파이프라인 구축 중</p>
-          </div>
-          <div style="margin-bottom: 1.25rem;">
-            <div style="font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">📝 Weekly Build Log</div>
-            <p style="font-size: 0.88rem;">매주 작업 과정을 솔직하게 기록</p>
-          </div>
-          <div>
-            <div style="font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">🌐 사라요가 사이트 운영</div>
-            <p style="font-size: 0.88rem;">동일 스택으로 구축한 첫 번째 프로젝트</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-dark">
-  <div class="container">
-    <h2>함께 기록을 따라오세요</h2>
-    <p>비전문가의 솔직한 시행착오가 누군가에게 도움이 되길 바랍니다.</p>
-    <div class="social-links">
-      <a href="https://github.com/galincia-hub" target="_blank" class="social-link">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="blog/index.html" class="social-link">
-        ✍️ 블로그 구독
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
-    <div class="footer-links">
+    <div class="nav-right">
       <a href="blog/index.html">블로그</a>
-      <a href="portfolio.html">포트폴리오</a>
       <a href="about.html">About</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
     </div>
-  </div>
-</footer>
+  </nav>
+
+  <ul class="post-list" id="post-list">
+    <li class="post-list-item" style="color: var(--sub); font-size: 0.9rem;">불러오는 중...</li>
+  </ul>
+
+  <footer>
+    <p>© 2026 Pagery</p>
+  </footer>
+</div>
 
 <script src="js/main.js"></script>
 <script>
-  loadPosts({ container: document.getElementById('home-cards'), limit: 6, postsPath: 'blog/posts.json' });
+  loadPosts({ postsPath: 'blog/posts.json' }).then(posts => {
+    renderMinimalList(document.getElementById('post-list'), posts, 'blog/');
+  });
 </script>
 </body>
 </html>

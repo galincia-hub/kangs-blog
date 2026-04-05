@@ -3,88 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagery's Admin</title>
+  <title>Admin — Pagery</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
+<div class="page">
+  <nav class="site-nav">
     <a href="index.html" class="nav-logo">Pagery</a>
-    <ul class="nav-links">
-      <li><a href="index.html">홈</a></li>
-      <li><a href="blog/index.html">블로그</a></li>
-      <li><a href="portfolio.html">포트폴리오</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
-      <button class="nav-toggle" aria-label="메뉴">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+    <div class="nav-right">
+      <a href="blog/index.html">블로그</a>
+      <a href="about.html">About</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
 
-<!-- LOGIN -->
-<section class="admin-login" id="login-section">
-  <div class="admin-login-box">
+  <div id="login-section" class="admin-login-box">
     <h2>관리자</h2>
-    <p style="margin-bottom: 1.5rem;">블로그 콘텐츠 현황 (읽기 전용)</p>
     <div class="form-group">
       <label for="pwd">비밀번호</label>
       <input type="password" id="pwd" placeholder="비밀번호 입력" autocomplete="current-password">
     </div>
     <p class="admin-error" id="admin-error">비밀번호가 틀렸습니다.</p>
-    <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" onclick="checkPassword()">로그인</button>
+    <button class="btn" onclick="checkPassword()">로그인</button>
   </div>
-</section>
 
-<!-- ADMIN PANEL -->
-<section class="admin-panel" id="admin-panel">
-  <div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-      <h2>콘텐츠 현황</h2>
-      <button class="btn btn-outline" onclick="logout()" style="font-size: 0.85rem; padding: 0.4rem 1rem;">로그아웃</button>
+  <div id="admin-panel" class="admin-panel">
+    <div class="admin-stats">
+      <div><div class="stat-num" id="stat-total">-</div><div class="stat-label">전체 글</div></div>
+      <div><div class="stat-num" id="stat-pinned">-</div><div class="stat-label">고정 글</div></div>
+      <div><div class="stat-num" id="stat-cats">-</div><div class="stat-label">카테고리</div></div>
     </div>
-    <div class="stats-grid" id="stats-grid">
-      <div class="stat-card"><div class="stat-num" id="stat-total">-</div><div class="stat-label">전체 글</div></div>
-      <div class="stat-card"><div class="stat-num" id="stat-pinned">-</div><div class="stat-label">고정 글</div></div>
-      <div class="stat-card"><div class="stat-num" id="stat-cats">-</div><div class="stat-label">카테고리</div></div>
-    </div>
-
-    <h3 style="margin: 2rem 0 1rem;">카테고리별 현황</h3>
-    <div id="cat-stats" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;"></div>
-
-    <h3 style="margin-bottom: 1rem;">전체 글 목록</h3>
-    <div style="overflow-x: auto;">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>날짜</th>
-            <th>제목</th>
-            <th>카테고리</th>
-            <th>고정</th>
-            <th>슬러그</th>
-          </tr>
-        </thead>
-        <tbody id="posts-table"></tbody>
-      </table>
-    </div>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>날짜</th>
+          <th>제목</th>
+          <th>카테고리</th>
+          <th>고정</th>
+        </tr>
+      </thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+    <p style="margin-top: 1.5rem;"><button class="btn" onclick="logout()" style="font-size:0.82rem; padding: 0.3rem 0.8rem;">로그아웃</button></p>
   </div>
-</section>
 
-<footer>
-  <div class="footer-inner">
-    <p>© 2026 Pagery. Admin Panel.</p>
-  </div>
-</footer>
+  <footer>
+    <p>© 2026 Pagery</p>
+  </footer>
+</div>
 
 <script src="js/main.js"></script>
 <script>
-  // 비밀번호: 사라요가와 동일 방식 (평문 비교 — GitHub Pages 특성상 완전 보안 불필요, 우발적 접근 방지용)
   const ADMIN_PW = 'kang2026';
 
   document.getElementById('pwd').addEventListener('keydown', e => {
@@ -92,8 +66,7 @@
   });
 
   function checkPassword() {
-    const val = document.getElementById('pwd').value;
-    if (val === ADMIN_PW) {
+    if (document.getElementById('pwd').value === ADMIN_PW) {
       document.getElementById('login-section').style.display = 'none';
       document.getElementById('admin-panel').style.display = 'block';
       loadAdminData();
@@ -120,26 +93,14 @@
     posts.forEach(p => p.category.forEach(c => { catMap[c] = (catMap[c] || 0) + 1; }));
     document.getElementById('stat-cats').textContent = Object.keys(catMap).length;
 
-    const catEl = document.getElementById('cat-stats');
-    Object.entries(catMap).forEach(([cat, count]) => {
-      const el = document.createElement('span');
-      el.className = 'cat-btn active';
-      el.style.cursor = 'default';
-      el.textContent = `${cat} (${count})`;
-      catEl.appendChild(el);
-    });
-
-    const tbody = document.getElementById('posts-table');
-    posts.forEach(p => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+    const tbody = document.getElementById('admin-tbody');
+    tbody.innerHTML = posts.map(p => `
+      <tr>
         <td>${p.date}</td>
-        <td><strong>${p.title}</strong></td>
+        <td class="admin-table-title">${p.title}</td>
         <td>${p.category.join(', ')}</td>
         <td>${p.pinned ? '📌' : ''}</td>
-        <td><code style="font-size:0.8rem; color: var(--sub);">${p.slug}</code></td>`;
-      tbody.appendChild(tr);
-    });
+      </tr>`).join('');
   }
 </script>
 </body>

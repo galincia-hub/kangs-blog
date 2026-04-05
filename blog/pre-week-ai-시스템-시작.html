@@ -36,45 +36,39 @@
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
+<div class="page">
+  <nav class="site-nav">
     <a href="../index.html" class="nav-logo">Pagery</a>
-    <ul class="nav-links">
-      <li><a href="../index.html">홈</a></li>
-      <li><a href="index.html" class="active">블로그</a></li>
-      <li><a href="../portfolio.html">포트폴리오</a></li>
-      <li><a href="../about.html">About</a></li>
-    </ul>
-    <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
-      <button class="nav-toggle" aria-label="메뉴"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+    <div class="nav-right">
+      <a href="index.html">블로그</a>
+      <a href="../about.html">About</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
 
-<section class="post-hero">
-  <div class="container" style="max-width: 740px;">
+  <div class="post-hero">
     <div class="post-breadcrumb">
       <a href="../index.html">홈</a><span>›</span>
       <a href="index.html">블로그</a><span>›</span>
       AI 활용기
     </div>
-    <div class="card-cats" style="margin-bottom: 0.75rem;">
+    <div class="post-hero-cats">
       <span class="card-cat">AI 활용기</span>
       <span class="card-cat">작업일지</span>
     </div>
     <h1 class="post-title">Pre-Week: AI로 여행사 사업 시스템을 만들기로 한 날</h1>
     <div class="post-meta-row">
-      <span style="font-size: 0.88rem; color: var(--sub);">Pagery</span>
-      <span style="font-size: 0.88rem; color: var(--sub);">2026년 2월 27일</span>
+      <span>Pagery</span>
+      <span>2026년 2월 27일</span>
       <div class="post-tags">
         <span class="post-tag">#CruiseAI</span>
         <span class="post-tag">#빌드인퍼블릭</span>
         <span class="post-tag">#Claude Code</span>
       </div>
     </div>
-  </div>
-</section>
+    </div>
 
-<article class="post-content">
+    <article class="post-content">
 
   <h2>이번 주에 뭘 했나</h2>
   <p>
@@ -127,37 +121,28 @@
 
 </article>
 
-<aside class="toc-sidebar" id="toc-sidebar">
-  <div class="toc-inner">
+    <aside class="toc-sidebar" id="toc-sidebar">
     <p class="toc-title">목차</p>
     <nav id="toc-nav"></nav>
-  </div>
-</aside>
+  </aside>
 
-<section class="post-related">
-  <div class="container">
-    <h3 style="margin-bottom: 1.5rem;">관련 글</h3>
-    <div class="related-grid" id="related-grid"></div>
-  </div>
-</section>
+    <section class="post-related">
+    <h3>관련 글</h3>
+    <ul class="related-list" id="related-list"></ul>
+  </section>
 
-<footer>
-  <div class="footer-inner">
-    <p>© 2026 Pagery. Built with pure HTML/CSS/JS + GitHub Pages.</p>
-    <div class="footer-links">
-      <a href="index.html">블로그</a>
-      <a href="../portfolio.html">포트폴리오</a>
-      <a href="../about.html">About</a>
-    </div>
-  </div>
-</footer>
+    <footer>
+    <p>© 2026 Pagery</p>
+  </footer>
+</div>
+</div>
 
 <script src="../js/main.js"></script>
 <script>
   loadPosts({ postsPath: '../blog/posts.json' }).then(posts => {
     const related = posts.filter(p => p.slug !== 'pre-week-ai-시스템-시작').slice(0, 4);
-    const grid = document.getElementById('related-grid');
-    if (related.length > 0 && grid) grid.innerHTML = related.map(p => cardHTMLRelative(p, '../')).join('');
+    const list = document.getElementById('related-list');
+    if (list) list.innerHTML = related.map(p => `<li><a href="${p.slug}.html">${p.title}</a></li>`).join('');
   });
 </script>
 </body>
