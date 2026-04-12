@@ -294,121 +294,8 @@ const LINK_META = {
 const TYPE_LIST = ['정보분석','작업로그','의사결정','트러블슈팅','설계','발견','회고'];
 const ACTION_LIST = ['후속작업','참고','반영완료','보류'];
 
-// ── DATA (3차원 태그 + links 확장 + publish) ──
-const archiveData = [
-  {
-    id:1, status:"inbox", source:"claude-ai", date:"2026-04-11",
-    title:"블로그 아카이빙 시스템 설계 — 작업일지→블로그→SNS 파이프라인",
-    excerpt:"클로드코드 작업 기록을 자동으로 아카이빙하고, 선택해서 블로그에 올리고, SNS까지 연결하는 전체 파이프라인을 설계했다.",
-    summary:"오늘은 작업 기록의 자동화 파이프라인을 구상했다. 매번 블로그 글 쓰기 귀찮은 문제를 해결하기 위해, Claude Code 작업이 끝나면 자동으로 작업일지를 정리하고 → 아카이빙 페이지에 쌓고 → 거기서 골라서 블로그에 올리는 구조를 설계했다.",
-    body:"<h4>왜 만드나</h4><p>Claude.ai에서 작업한 내용을 찾으려면 채팅 기록을 하나하나 뒤져야 한다.</p><h4>어떻게 해결하나</h4><p>작업이 끝나면 에이전트가 자동으로 스토리를 정리해서 아카이빙에 쌓는다.</p><h4>핵심 결정</h4><ul><li>DB 없이 JSON 파일로 운영</li><li>Learning Queue의 2분할 레이아웃 차용</li><li>3단계 탭: 수집 → 선별 → 발행완료</li></ul>",
-    project:["아카이빙/파이프라인"], type:"설계", action:"후속작업",
-    tags:["LearningQueue","블로그자동화"],
-    links:{claude_ai:"https://claude.ai/chat/example-1"}, memo:"",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:2, status:"inbox", source:"claude-code", date:"2026-04-11",
-    title:"RSSC 크루즈 브라우저 자동화 — Playwright + Gemma 4 조합 테스트",
-    excerpt:"RSSC 홈페이지 크롤링과 이메일 파싱 두 가지 방식을 비교하고, Gemma 4로 비정형 데이터를 분석하는 파이프라인을 구성했다.",
-    summary:"RSSC 크루즈 가격/일정 데이터를 자동으로 수집하는 시스템을 만들었다. Playwright로 크롤링하는 방식과 이메일 파싱 방식을 비교했다.",
-    body:"<h4>시도한 것</h4><p>Playwright로 RSSC 웹사이트를 직접 크롤링했는데, 동적 로딩이 많아서 안정성이 떨어졌다.</p><h4>막혔던 곳</h4><p>이메일 본문 HTML 구조가 매번 달라서 정규식으로는 한계. Gemma 4에게 시키니까 바로 됐다.</p><h4>배운 것</h4><p>비정형 데이터 → LLM 정형화가 생각보다 강력하다.</p>",
-    project:["크루즈/RSSC","로컬AI/Gemma"], type:"작업로그", action:"참고",
-    tags:["Playwright","크롤링","브라우저자동화"],
-    links:{claude_ai:"https://claude.ai/chat/example-2",github:"https://github.com/galincia-hub/cruise-scraper"},
-    memo:"이메일 파싱 방식이 더 안정적.",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:3, status:"inbox", source:"claude-ai", date:"2026-04-10",
-    title:"Gemini API vs Claude API 비용/성능 비교 — 크루즈 시스템 모델 최적 배치",
-    excerpt:"작업 종류별로 어떤 LLM을 쓰는 게 가성비가 좋은지 정리.",
-    summary:"크루즈 AI 시스템의 각 모듈에 어떤 LLM을 배치할지 비용과 성능을 비교했다.",
-    body:"<h4>비교 기준</h4><p>100건의 동일 프롬프트로 정확도와 비용을 측정.</p><h4>결과</h4><ul><li>분류: Gemini Flash 승 (가격 1/5)</li><li>글쓰기: Claude 압도적</li></ul>",
-    project:["크루즈/CruiseStudio"], type:"의사결정", action:"반영완료",
-    tags:["Gemini","Claude","비용최적화"],
-    links:{claude_ai:"https://claude.ai/chat/example-3"}, memo:"",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:4, status:"inbox", source:"lilys", date:"2026-04-06",
-    title:"AI뉴스 — Gemma 4, Veo3.1 Lite, 클로드 코드 유출, 타입캐스트",
-    excerpt:"조코딩 AI뉴스 요약. Gemma 4 오픈소스 출시, 클로드 코드 소스 유출 사태 정리.",
-    summary:"구글이 용량 대비 최강 오픈소스 모델 Gemma 4를 출시했다. 클로드 코드가 npm 맵파일을 통해 소스가 유출되었다.",
-    body:"<h4>Gemma 4 핵심</h4><ul><li>31B 모델이 아레나 엘로 1452점</li><li>아파치 2.0 라이선스</li></ul><h4>클로드 코드 유출</h4><p>npm 맵 파일을 통해 핵심 구성 요소 공개. OpenClaw가 빠르게 개발됨.</p>",
-    project:["로컬AI/Gemma","OpenClaw"], type:"정보분석", action:"후속작업",
-    tags:["오픈소스","Veo","타입캐스트"],
-    links:{source:"https://lilys.ai/digest/9031701/10316226/"}, memo:"Gemma 4 로컬 설치 테스트해볼 것.",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:5, status:"inbox", source:"memo", date:"2026-04-09",
-    title:"노정석 대표 인터뷰 핵심 인사이트 — AI 시대 인재상과 업무 자동화",
-    excerpt:"비팩토리 노정석 대표의 AI 네이티브 기업 운영 사례에서 크루즈AI에 적용할 수 있는 포인트를 정리.",
-    summary:"AI 에이전트로 '주관식을 객관식으로 바꾸는' 접근이 인상적이었다.",
-    body:"<h4>핵심 인사이트</h4><p>'단순 노동을 없애는 것'이 AI 도입의 핵심.</p><h4>크루즈AI 적용</h4><ul><li>CruiseKMS: 고객 문의 → AI가 선택지로 정리</li><li>CruiseCRM: 프로모션 → AI가 타겟 세분화</li></ul>",
-    project:["크루즈/CruiseKMS","크루즈/CruiseCRM"], type:"정보분석", action:"후속작업",
-    tags:["노정석","비팩토리"],
-    links:{claude_ai:"https://claude.ai/chat/example-5"}, memo:"블로그 포스트로 쓸만한 소재.",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:6, status:"shortlist", source:"claude-code", date:"2026-04-08",
-    title:"CruiseStudio Writer/Reviewer 멀티에이전트 파이프라인 구축",
-    excerpt:"유튜브 → 블로그 자동 변환 시스템의 핵심인 Writer-Reviewer 구조를 구현하고 테스트했다.",
-    summary:"Writer가 초안을 쓰고 Reviewer가 팩트체크하는 3단계 구조. Writer 환각 문제를 Reviewer 프롬프트 강화로 해결.",
-    body:"<h4>구조</h4><p>Writer → Reviewer → Style Editor.</p><h4>문제와 해결</h4><p>Writer 환각 발생. Reviewer에 '원본에 없는 사실이면 삭제하라' 규칙 추가.</p>",
-    project:["크루즈/CruiseStudio"], type:"작업로그", action:"참고",
-    tags:["멀티에이전트","환각방지"],
-    links:{claude_ai:"https://claude.ai/chat/example-6",github:"https://github.com/galincia-hub/cruise-studio"},
-    memo:"환각 방지 패턴은 별도 포스트로 쓸 수 있을 것 같다.",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:7, status:"shortlist", source:"claude-ai", date:"2026-04-07",
-    title:"크루즈 사업 5개년 AI 전환 로드맵 — Phase 1~5 수립",
-    excerpt:"크루즈인터내셔널의 AI 기반 성장 전략을 5단계로 나누어 로드맵을 수립했다.",
-    summary:"Phase 1은 내부 업무 자동화, Phase 5는 여행업 AI 인프라 제공자로의 전환.",
-    body:"<h4>5단계 로드맵</h4><ul><li>Phase 1: 내부 업무 자동화</li><li>Phase 2: 고객 접점 AI화</li><li>Phase 3: 데이터 기반 상품 기획</li><li>Phase 4: 파트너 플랫폼</li><li>Phase 5: 여행업 AI 인프라</li></ul>",
-    project:["크루즈"], type:"설계", action:"후속작업",
-    tags:["AI전환","5개년계획"],
-    links:{claude_ai:"https://claude.ai/chat/example-7"}, memo:"블로그 시리즈로 쓰면 좋겠다.",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:8, status:"shortlist", source:"claude-code", date:"2026-04-05",
-    title:"dev-hub 진척도 대시보드 구축 — 9개 프로젝트 통합 현황판",
-    excerpt:"진행 중인 9개 프로젝트의 상태를 한눈에 볼 수 있는 대시보드를 GitHub Pages에 배포했다.",
-    summary:"프로젝트가 많아지면서 뭐가 어디까지 됐는지 파악이 어려워져서 대시보드를 만들었다.",
-    body:"<h4>만든 이유</h4><p>9개 프로젝트를 동시에 돌리다 보니 '어제 뭐 했더라'부터 까먹기 시작했다.</p>",
-    project:["인프라"], type:"작업로그", action:"반영완료",
-    tags:["대시보드","GitHubPages","dev-hub"],
-    links:{github:"https://github.com/galincia-hub/dev-hub"}, memo:"",
-    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:9, status:"published", source:"claude-ai", date:"2026-04-03",
-    title:"[블로그] Week 1 — 바이브코딩, 그게 뭔데? Claude Code를 만나다",
-    excerpt:"바이브코딩이 뭔지도 모르고 시작한 첫 주.",
-    summary:"20년 넘게 여행업만 하다가, AI한테 밀릴 것 같아서 시작한 바이브코딩.",
-    body:"<h4>왜 시작했나</h4><p>회사에서 'AI 좀 써봐'라는 압박.</p><h4>첫 주</h4><ul><li>월: VS Code 설치</li><li>화: Claude Code 설치 → npm 에러 → 3시간</li><li>수: 설치 완료. '안녕 세계' 성공</li><li>목: 계산기 웹앱 성공. 충격.</li><li>금: 크루즈 가격 비교 도구 만들어볼까?</li></ul>",
-    project:["일반"], type:"회고", action:"반영완료",
-    tags:["바이브코딩","ClaudeCode","입문기"],
-    links:{blog:"https://galincia-hub.github.io/kangs-blog/blog/week1-vibe-coding.html"}, memo:"",
-    publish:{blog_url:"https://galincia-hub.github.io/kangs-blog/blog/week1-vibe-coding.html",blog_date:"2026-04-03",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  },
-  {
-    id:10, status:"published", source:"claude-ai", date:"2026-03-28",
-    title:"[블로그] Week 0 — 블로그를 왜 쓰나, 그리고 파게리는 누구인가",
-    excerpt:"첫 글. 짜파게티에서 온 필명 이야기.",
-    summary:"여행업 23년차 직장인이 왜 갑자기 코딩을 시작했는지.",
-    body:"<h4>이 블로그는</h4><p>유명해지려고 쓰는 블로그가 아니다. AI 시대에 비전문가가 어디까지 할 수 있는지 기록하는 곳.</p>",
-    project:["아카이빙/블로그"], type:"회고", action:"반영완료",
-    tags:["파게리","블로그시작"],
-    links:{blog:"https://galincia-hub.github.io/kangs-blog/blog/week0-intro.html"}, memo:"",
-    publish:{blog_url:"https://galincia-hub.github.io/kangs-blog/blog/week0-intro.html",blog_date:"2026-03-28",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
-  }
-];
+// ── DATA: archive.json에서 로드 ──
+let archiveData = [];
 
 // ── STATE ──
 let currentTab = "inbox";
@@ -420,12 +307,22 @@ let searchQuery = "";
 let sortAsc = false;
 
 // ── INIT ──
-function init() {
+async function init() {
   const saved = localStorage.getItem('pagery-theme');
   const el = document.documentElement;
   const btn = document.querySelector('.theme-toggle');
   if (saved === 'light') { el.removeAttribute('data-theme'); btn.textContent = '🌙'; }
   else { el.setAttribute('data-theme','dark'); btn.textContent = '☀️'; }
+
+  // archive.json에서 데이터 로드
+  try {
+    const res = await fetch('archive.json');
+    archiveData = await res.json();
+  } catch(e) {
+    console.error('archive.json 로드 실패:', e);
+    document.getElementById('listPanel').innerHTML = '<div class="list-empty">archive.json을 불러올 수 없습니다</div>';
+    return;
+  }
   renderFilters();
   renderList();
   updateCounts();
