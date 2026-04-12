@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아카이브 — Pagery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f4;
+  --bg-panel: #f5f1eb;
+  --bg-card: #efeae3;
+  --bg-card-hover: #e8e2d9;
+  --bg-card-selected: #e5ded4;
+  --bg-tag: #e8e2d9;
+  --bg-tag-active: #2d2a26;
+  --bg-input: #f5f1eb;
+  --text: #2d2a26;
+  --text-secondary: #8a8078;
+  --text-tag-active: #faf8f4;
+  --border: #ddd6cc;
+  --border-focus: #a07d5a;
+  --accent: #a07d5a;
+  --tab-active-bg: #2d2a26;
+  --tab-active-text: #faf8f4;
+  --highlight: #fde68a;
+  --source-claude: #b45309;
+  --source-code: #047857;
+  --source-lilys: #6d28d9;
+  --source-memo: #78716c;
+  --dim-label: #b0a898;
+  --action-todo: #d97706;
+  --action-ref: #6b7280;
+  --action-done: #059669;
+  --action-hold: #9333ea;
+  --font-sans: 'IBM Plex Sans KR', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 8px;
+  --radius-sm: 5px;
+  --transition: 0.15s ease;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --bg-panel: #282828;
+  --bg-card: #303030;
+  --bg-card-hover: #383838;
+  --bg-card-selected: #3c3c3c;
+  --bg-tag: #404040;
+  --bg-tag-active: #d8d5cf;
+  --bg-input: #303030;
+  --text: #d8d5cf;
+  --text-secondary: #a09a90;
+  --text-tag-active: #1e1e1e;
+  --border: #404040;
+  --border-focus: #c9a87c;
+  --accent: #c9a87c;
+  --tab-active-bg: #d8d5cf;
+  --tab-active-text: #1e1e1e;
+  --highlight: #854d0e;
+  --source-claude: #f0b940;
+  --source-code: #4ade80;
+  --source-lilys: #b09aee;
+  --source-memo: #a09a90;
+  --dim-label: #6a6560;
+  --action-todo: #fbbf24;
+  --action-ref: #9ca3af;
+  --action-done: #34d399;
+  --action-hold: #c084fc;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ── NAV ── */
+nav { display:flex; align-items:center; justify-content:space-between; padding:14px 28px; border-bottom:1px solid var(--border); background:var(--bg-panel); position:sticky; top:0; z-index:100; }
+nav .logo { font-weight:600; font-size:15px; letter-spacing:-0.02em; text-decoration:none; color:var(--text); }
+nav .nav-links { display:flex; align-items:center; gap:20px; }
+nav .nav-links a { font-size:13px; color:var(--text-secondary); text-decoration:none; transition:color var(--transition); }
+nav .nav-links a:hover, nav .nav-links a.active { color:var(--text); }
+.theme-toggle { background:none; border:none; cursor:pointer; font-size:14px; padding:4px 6px; color:var(--text-secondary); border-radius:var(--radius-sm); transition:background var(--transition); }
+.theme-toggle:hover { background:var(--bg-tag); }
+
+/* ── HEADER ── */
+.archive-header { padding:28px 28px 0; max-width:1440px; margin:0 auto; }
+.archive-header h1 { font-size:20px; font-weight:600; letter-spacing:-0.03em; margin-bottom:3px; }
+.archive-header p { font-size:13px; color:var(--text-secondary); margin-bottom:20px; }
+
+/* ── CONTROLS ── */
+.controls { max-width:1440px; margin:0 auto; padding:0 28px; }
+.tabs-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.tabs { display:flex; gap:4px; }
+.tab { padding:6px 14px; font-size:13px; font-weight:500; border:1px solid var(--border); border-radius:var(--radius-sm); background:transparent; color:var(--text-secondary); cursor:pointer; transition:all var(--transition); font-family:var(--font-sans); }
+.tab:hover { color:var(--text); border-color:var(--text-secondary); }
+.tab.active { background:var(--tab-active-bg); color:var(--tab-active-text); border-color:transparent; }
+.tab .count { font-size:11px; font-weight:400; margin-left:5px; opacity:0.6; }
+.sort-toggle { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); cursor:pointer; padding:5px 10px; border-radius:var(--radius-sm); border:1px solid var(--border); background:transparent; font-family:var(--font-sans); transition:all var(--transition); }
+.sort-toggle:hover { border-color:var(--text-secondary); color:var(--text); }
+
+/* Search */
+.search-bar { position:relative; margin-bottom:12px; }
+.search-bar input { width:100%; padding:9px 14px 9px 36px; font-size:13px; font-family:var(--font-sans); border:1px solid var(--border); border-radius:var(--radius); background:var(--bg-input); color:var(--text); outline:none; transition:border-color var(--transition); }
+.search-bar input:focus { border-color:var(--border-focus); }
+.search-bar input::placeholder { color:var(--text-secondary); opacity:0.7; }
+.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:13px; color:var(--text-secondary); pointer-events:none; }
+
+/* ── 3차원 태그 필터 ── */
+.filter-section { margin-bottom:16px; }
+.filter-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:6px; }
+.filter-label { font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--dim-label); min-width:52px; padding-top:5px; flex-shrink:0; }
+.filter-chips { display:flex; flex-wrap:wrap; gap:4px; }
+.tag-chip { padding:3px 10px; font-size:11.5px; font-weight:500; border-radius:20px; background:var(--bg-tag); color:var(--text-secondary); cursor:pointer; transition:all var(--transition); border:none; font-family:var(--font-sans); white-space:nowrap; }
+.tag-chip:hover { color:var(--text); }
+.tag-chip.active { background:var(--bg-tag-active); color:var(--text-tag-active); }
+/* action 색상 */
+.tag-chip[data-action="후속작업"].active { background:var(--action-todo); color:#fff; }
+.tag-chip[data-action="참고"].active { background:var(--action-ref); color:#fff; }
+.tag-chip[data-action="반영완료"].active { background:var(--action-done); color:#fff; }
+.tag-chip[data-action="보류"].active { background:var(--action-hold); color:#fff; }
+
+/* ── MAIN LAYOUT ── */
+.main-layout { display:grid; grid-template-columns:400px 1fr; gap:0; max-width:1440px; margin:0 auto; padding:0 28px 40px; min-height:calc(100vh - 300px); }
+
+/* ── LIST ── */
+.list-panel { border-right:1px solid var(--border); padding-right:16px; overflow-y:auto; max-height:calc(100vh - 340px); }
+.list-panel::-webkit-scrollbar { width:3px; }
+.list-panel::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+.card { display:flex; gap:0; padding:0; border-radius:var(--radius); cursor:pointer; transition:background var(--transition); margin-bottom:2px; overflow:hidden; }
+.card:hover { background:var(--bg-card-hover); }
+.card.selected { background:var(--bg-card-selected); }
+.card-color-bar { width:3px; min-height:100%; flex-shrink:0; border-radius:3px 0 0 3px; }
+.card-color-bar.claude-ai { background:var(--source-claude); }
+.card-color-bar.claude-code { background:var(--source-code); }
+.card-color-bar.lilys { background:var(--source-lilys); }
+.card-color-bar.memo { background:var(--source-memo); }
+.card-content { padding:12px 14px; flex:1; min-width:0; }
+.card-meta { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.source-badge { display:inline-flex; align-items:center; gap:4px; font-size:10.5px; font-weight:500; font-family:var(--font-mono); padding:2px 7px; border-radius:3px; letter-spacing:0.01em; }
+.source-badge.claude-ai { background:rgba(217,119,6,0.12); color:var(--source-claude); }
+.source-badge.claude-code { background:rgba(5,150,105,0.12); color:var(--source-code); }
+.source-badge.lilys { background:rgba(124,58,237,0.12); color:var(--source-lilys); }
+.source-badge.memo { background:rgba(115,115,115,0.12); color:var(--source-memo); }
+.card-date { font-size:11px; color:var(--text-secondary); font-family:var(--font-mono); }
+.card-title { font-size:13.5px; font-weight:500; line-height:1.4; margin-bottom:3px; letter-spacing:-0.01em; }
+.card-excerpt { font-size:12px; color:var(--text-secondary); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+/* card 하단에 project + action 표시 */
+.card-dim-tags { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; align-items:center; }
+.card-dim-tags .dim-project { font-size:10px; color:var(--accent); font-family:var(--font-mono); }
+.card-dim-tags .dim-type { font-size:10px; color:var(--text-secondary); font-family:var(--font-mono); }
+.action-pill { font-size:9.5px; font-weight:600; padding:1px 7px; border-radius:10px; color:#fff; }
+.action-pill.후속작업 { background:var(--action-todo); }
+.action-pill.참고 { background:var(--action-ref); }
+.action-pill.반영완료 { background:var(--action-done); }
+.action-pill.보류 { background:var(--action-hold); }
+mark { background:var(--highlight); color:inherit; padding:0 1px; border-radius:2px; }
+.list-empty { padding:60px 16px; text-align:center; color:var(--text-secondary); font-size:13px; }
+
+/* ── DETAIL ── */
+.detail-panel { padding-left:24px; overflow-y:auto; max-height:calc(100vh - 340px); }
+.detail-panel::-webkit-scrollbar { width:3px; }
+.detail-panel::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+.detail-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:300px; color:var(--text-secondary); font-size:13px; gap:6px; }
+.detail-empty .empty-icon { font-size:28px; opacity:0.4; }
+.detail-header { margin-bottom:20px; }
+.detail-header .detail-meta { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.detail-header h2 { font-size:20px; font-weight:600; letter-spacing:-0.03em; line-height:1.35; margin-bottom:4px; }
+.detail-header .detail-date { font-size:12px; color:var(--text-secondary); font-family:var(--font-mono); }
+.detail-summary { background:var(--bg-card); border-radius:var(--radius); padding:16px 18px; margin-bottom:18px; border-left:3px solid var(--accent); }
+.detail-summary h3 { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:8px; }
+.detail-summary p { font-size:13.5px; line-height:1.7; }
+.detail-body { font-size:14px; line-height:1.75; margin-bottom:20px; }
+.detail-body h4 { font-size:14.5px; font-weight:600; margin:18px 0 6px; letter-spacing:-0.02em; }
+.detail-body p { margin-bottom:10px; }
+.detail-body ul { margin:6px 0 10px 18px; font-size:13.5px; }
+.detail-body li { margin-bottom:3px; }
+.detail-body code { font-family:var(--font-mono); font-size:12px; background:var(--bg-tag); padding:2px 5px; border-radius:3px; }
+.detail-links { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+.detail-links a { display:inline-flex; align-items:center; gap:5px; padding:6px 12px; font-size:12px; font-weight:500; border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); text-decoration:none; transition:all var(--transition); }
+.detail-links a:hover { border-color:var(--accent); color:var(--accent); }
+
+/* 3차원 태그 표시 (디테일) */
+.detail-dimensions { margin-bottom:18px; }
+.dim-row { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+.dim-row-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--dim-label); min-width:42px; }
+.dim-row .dtag { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; font-size:11.5px; font-weight:500; border-radius:20px; background:var(--bg-tag); color:var(--text-secondary); }
+.dtag .remove-tag { cursor:pointer; font-size:13px; line-height:1; opacity:0.5; transition:opacity var(--transition); background:none; border:none; color:inherit; padding:0 0 0 2px; }
+.dtag .remove-tag:hover { opacity:1; }
+
+/* 보조 태그 */
+.detail-free-tags { margin-bottom:18px; }
+.detail-free-tags .dtag-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--dim-label); margin-bottom:5px; }
+.detail-free-tags-list { display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
+.add-tag-btn { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; font-size:11.5px; font-weight:500; border-radius:20px; background:transparent; border:1px dashed var(--border); color:var(--text-secondary); cursor:pointer; font-family:var(--font-sans); transition:all var(--transition); }
+.add-tag-btn:hover { border-color:var(--accent); color:var(--accent); }
+.tag-input-wrap { display:none; align-items:center; }
+.tag-input-wrap.show { display:inline-flex; }
+.tag-input-wrap input { width:100px; padding:3px 8px; font-size:11.5px; font-family:var(--font-sans); border:1px solid var(--border); border-radius:20px; background:var(--bg-input); color:var(--text); outline:none; }
+.tag-input-wrap input:focus { border-color:var(--accent); }
+
+/* Memo */
+.detail-memo { margin-bottom:18px; }
+.detail-memo label { display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:6px; }
+.detail-memo textarea { width:100%; min-height:70px; padding:10px 12px; font-size:13px; font-family:var(--font-sans); border:1px solid var(--border); border-radius:var(--radius); background:var(--bg-input); color:var(--text); resize:vertical; outline:none; transition:border-color var(--transition); }
+.detail-memo textarea:focus { border-color:var(--border-focus); }
+
+/* Actions */
+.detail-actions { display:flex; gap:6px; padding-top:14px; border-top:1px solid var(--border); }
+.btn { padding:7px 16px; font-size:12.5px; font-weight:500; font-family:var(--font-sans); border-radius:var(--radius-sm); cursor:pointer; transition:all var(--transition); border:1px solid var(--border); background:var(--bg-panel); color:var(--text); }
+.btn:hover { border-color:var(--text-secondary); }
+.btn-primary { background:var(--tab-active-bg); color:var(--tab-active-text); border-color:transparent; }
+.btn-primary:hover { opacity:0.85; }
+.btn-publish { background:var(--accent); color:#fff; border-color:transparent; }
+.btn-publish:hover { opacity:0.85; }
+
+footer { text-align:center; padding:20px; font-size:11.5px; color:var(--text-secondary); border-top:1px solid var(--border); }
+
+@media (max-width:900px) {
+  .main-layout { grid-template-columns:1fr; }
+  .list-panel { border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:12px; max-height:40vh; }
+  .detail-panel { padding-left:0; padding-top:16px; }
+  .archive-header,.controls { padding-left:16px; padding-right:16px; }
+  .main-layout { padding:0 16px 40px; }
+  nav { padding:14px 16px; }
+  .filter-row { flex-direction:column; gap:4px; }
+  .filter-label { min-width:auto; padding-top:0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://galincia-hub.github.io/kangs-blog/index.html" class="logo">Pagery</a>
+  <div class="nav-links">
+    <a href="https://galincia-hub.github.io/kangs-blog/blog/index.html">블로그 바로가기</a>
+    <a href="#" class="active">아카이브</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="테마 전환">☀️</button>
+  </div>
+</nav>
+
+<div class="archive-header">
+  <h1>작업 아카이브</h1>
+  <p>Claude Code · Claude.ai · Lilys AI — 작업 기록을 모아두고, 골라서 블로그에 올린다.</p>
+</div>
+
+<div class="controls">
+  <div class="tabs-row">
+    <div class="tabs">
+      <button class="tab active" data-tab="inbox" onclick="switchTab('inbox')">수집<span class="count" id="count-inbox">0</span></button>
+      <button class="tab" data-tab="shortlist" onclick="switchTab('shortlist')">선별<span class="count" id="count-shortlist">0</span></button>
+      <button class="tab" data-tab="published" onclick="switchTab('published')">발행완료<span class="count" id="count-published">0</span></button>
+    </div>
+    <button class="sort-toggle" onclick="toggleSort()" id="sortBtn">↓ 최신순</button>
+  </div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="제목, 태그, 내용 검색..." oninput="filterCards()">
+  </div>
+  <!-- ★ 차원별 3행 필터 -->
+  <div class="filter-section" id="filterSection"></div>
+</div>
+
+<div class="main-layout">
+  <div class="list-panel" id="listPanel"></div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty"><span class="empty-icon">📋</span>글을 선택하면 여기에 표시됩니다</div>
+  </div>
+</div>
+
+<footer>© 2026 Pagery</footer>
+
+<script>
+const SOURCE_META = {
+  'claude-ai':   { icon:'💬', label:'claude.ai' },
+  'claude-code': { icon:'⌨️', label:'claude code' },
+  'lilys':       { icon:'🎬', label:'lilys ai' },
+  'memo':        { icon:'📝', label:'memo' }
+};
+const LINK_META = {
+  claude_ai:   { icon:'💬', label:'Claude 대화' },
+  claude_code: { icon:'⌨️', label:'Code 세션' },
+  source:      { icon:'🔗', label:'원본' },
+  github:      { icon:'🔗', label:'GitHub' },
+  blog:        { icon:'📄', label:'블로그 글' },
+  related:     { icon:'🔗', label:'관련 링크' }
+};
+const TYPE_LIST = ['정보분석','작업로그','의사결정','트러블슈팅','설계','발견','회고'];
+const ACTION_LIST = ['후속작업','참고','반영완료','보류'];
+
+// ── DATA (3차원 태그 + links 확장 + publish) ──
+const archiveData = [
+  {
+    id:1, status:"inbox", source:"claude-ai", date:"2026-04-11",
+    title:"블로그 아카이빙 시스템 설계 — 작업일지→블로그→SNS 파이프라인",
+    excerpt:"클로드코드 작업 기록을 자동으로 아카이빙하고, 선택해서 블로그에 올리고, SNS까지 연결하는 전체 파이프라인을 설계했다.",
+    summary:"오늘은 작업 기록의 자동화 파이프라인을 구상했다. 매번 블로그 글 쓰기 귀찮은 문제를 해결하기 위해, Claude Code 작업이 끝나면 자동으로 작업일지를 정리하고 → 아카이빙 페이지에 쌓고 → 거기서 골라서 블로그에 올리는 구조를 설계했다.",
+    body:"<h4>왜 만드나</h4><p>Claude.ai에서 작업한 내용을 찾으려면 채팅 기록을 하나하나 뒤져야 한다.</p><h4>어떻게 해결하나</h4><p>작업이 끝나면 에이전트가 자동으로 스토리를 정리해서 아카이빙에 쌓는다.</p><h4>핵심 결정</h4><ul><li>DB 없이 JSON 파일로 운영</li><li>Learning Queue의 2분할 레이아웃 차용</li><li>3단계 탭: 수집 → 선별 → 발행완료</li></ul>",
+    project:["아카이빙/파이프라인"], type:"설계", action:"후속작업",
+    tags:["LearningQueue","블로그자동화"],
+    links:{claude_ai:"https://claude.ai/chat/example-1"}, memo:"",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:2, status:"inbox", source:"claude-code", date:"2026-04-11",
+    title:"RSSC 크루즈 브라우저 자동화 — Playwright + Gemma 4 조합 테스트",
+    excerpt:"RSSC 홈페이지 크롤링과 이메일 파싱 두 가지 방식을 비교하고, Gemma 4로 비정형 데이터를 분석하는 파이프라인을 구성했다.",
+    summary:"RSSC 크루즈 가격/일정 데이터를 자동으로 수집하는 시스템을 만들었다. Playwright로 크롤링하는 방식과 이메일 파싱 방식을 비교했다.",
+    body:"<h4>시도한 것</h4><p>Playwright로 RSSC 웹사이트를 직접 크롤링했는데, 동적 로딩이 많아서 안정성이 떨어졌다.</p><h4>막혔던 곳</h4><p>이메일 본문 HTML 구조가 매번 달라서 정규식으로는 한계. Gemma 4에게 시키니까 바로 됐다.</p><h4>배운 것</h4><p>비정형 데이터 → LLM 정형화가 생각보다 강력하다.</p>",
+    project:["크루즈/RSSC","로컬AI/Gemma"], type:"작업로그", action:"참고",
+    tags:["Playwright","크롤링","브라우저자동화"],
+    links:{claude_ai:"https://claude.ai/chat/example-2",github:"https://github.com/galincia-hub/cruise-scraper"},
+    memo:"이메일 파싱 방식이 더 안정적.",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:3, status:"inbox", source:"claude-ai", date:"2026-04-10",
+    title:"Gemini API vs Claude API 비용/성능 비교 — 크루즈 시스템 모델 최적 배치",
+    excerpt:"작업 종류별로 어떤 LLM을 쓰는 게 가성비가 좋은지 정리.",
+    summary:"크루즈 AI 시스템의 각 모듈에 어떤 LLM을 배치할지 비용과 성능을 비교했다.",
+    body:"<h4>비교 기준</h4><p>100건의 동일 프롬프트로 정확도와 비용을 측정.</p><h4>결과</h4><ul><li>분류: Gemini Flash 승 (가격 1/5)</li><li>글쓰기: Claude 압도적</li></ul>",
+    project:["크루즈/CruiseStudio"], type:"의사결정", action:"반영완료",
+    tags:["Gemini","Claude","비용최적화"],
+    links:{claude_ai:"https://claude.ai/chat/example-3"}, memo:"",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:4, status:"inbox", source:"lilys", date:"2026-04-06",
+    title:"AI뉴스 — Gemma 4, Veo3.1 Lite, 클로드 코드 유출, 타입캐스트",
+    excerpt:"조코딩 AI뉴스 요약. Gemma 4 오픈소스 출시, 클로드 코드 소스 유출 사태 정리.",
+    summary:"구글이 용량 대비 최강 오픈소스 모델 Gemma 4를 출시했다. 클로드 코드가 npm 맵파일을 통해 소스가 유출되었다.",
+    body:"<h4>Gemma 4 핵심</h4><ul><li>31B 모델이 아레나 엘로 1452점</li><li>아파치 2.0 라이선스</li></ul><h4>클로드 코드 유출</h4><p>npm 맵 파일을 통해 핵심 구성 요소 공개. OpenClaw가 빠르게 개발됨.</p>",
+    project:["로컬AI/Gemma","OpenClaw"], type:"정보분석", action:"후속작업",
+    tags:["오픈소스","Veo","타입캐스트"],
+    links:{source:"https://lilys.ai/digest/9031701/10316226/"}, memo:"Gemma 4 로컬 설치 테스트해볼 것.",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:5, status:"inbox", source:"memo", date:"2026-04-09",
+    title:"노정석 대표 인터뷰 핵심 인사이트 — AI 시대 인재상과 업무 자동화",
+    excerpt:"비팩토리 노정석 대표의 AI 네이티브 기업 운영 사례에서 크루즈AI에 적용할 수 있는 포인트를 정리.",
+    summary:"AI 에이전트로 '주관식을 객관식으로 바꾸는' 접근이 인상적이었다.",
+    body:"<h4>핵심 인사이트</h4><p>'단순 노동을 없애는 것'이 AI 도입의 핵심.</p><h4>크루즈AI 적용</h4><ul><li>CruiseKMS: 고객 문의 → AI가 선택지로 정리</li><li>CruiseCRM: 프로모션 → AI가 타겟 세분화</li></ul>",
+    project:["크루즈/CruiseKMS","크루즈/CruiseCRM"], type:"정보분석", action:"후속작업",
+    tags:["노정석","비팩토리"],
+    links:{claude_ai:"https://claude.ai/chat/example-5"}, memo:"블로그 포스트로 쓸만한 소재.",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:6, status:"shortlist", source:"claude-code", date:"2026-04-08",
+    title:"CruiseStudio Writer/Reviewer 멀티에이전트 파이프라인 구축",
+    excerpt:"유튜브 → 블로그 자동 변환 시스템의 핵심인 Writer-Reviewer 구조를 구현하고 테스트했다.",
+    summary:"Writer가 초안을 쓰고 Reviewer가 팩트체크하는 3단계 구조. Writer 환각 문제를 Reviewer 프롬프트 강화로 해결.",
+    body:"<h4>구조</h4><p>Writer → Reviewer → Style Editor.</p><h4>문제와 해결</h4><p>Writer 환각 발생. Reviewer에 '원본에 없는 사실이면 삭제하라' 규칙 추가.</p>",
+    project:["크루즈/CruiseStudio"], type:"작업로그", action:"참고",
+    tags:["멀티에이전트","환각방지"],
+    links:{claude_ai:"https://claude.ai/chat/example-6",github:"https://github.com/galincia-hub/cruise-studio"},
+    memo:"환각 방지 패턴은 별도 포스트로 쓸 수 있을 것 같다.",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:7, status:"shortlist", source:"claude-ai", date:"2026-04-07",
+    title:"크루즈 사업 5개년 AI 전환 로드맵 — Phase 1~5 수립",
+    excerpt:"크루즈인터내셔널의 AI 기반 성장 전략을 5단계로 나누어 로드맵을 수립했다.",
+    summary:"Phase 1은 내부 업무 자동화, Phase 5는 여행업 AI 인프라 제공자로의 전환.",
+    body:"<h4>5단계 로드맵</h4><ul><li>Phase 1: 내부 업무 자동화</li><li>Phase 2: 고객 접점 AI화</li><li>Phase 3: 데이터 기반 상품 기획</li><li>Phase 4: 파트너 플랫폼</li><li>Phase 5: 여행업 AI 인프라</li></ul>",
+    project:["크루즈"], type:"설계", action:"후속작업",
+    tags:["AI전환","5개년계획"],
+    links:{claude_ai:"https://claude.ai/chat/example-7"}, memo:"블로그 시리즈로 쓰면 좋겠다.",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:8, status:"shortlist", source:"claude-code", date:"2026-04-05",
+    title:"dev-hub 진척도 대시보드 구축 — 9개 프로젝트 통합 현황판",
+    excerpt:"진행 중인 9개 프로젝트의 상태를 한눈에 볼 수 있는 대시보드를 GitHub Pages에 배포했다.",
+    summary:"프로젝트가 많아지면서 뭐가 어디까지 됐는지 파악이 어려워져서 대시보드를 만들었다.",
+    body:"<h4>만든 이유</h4><p>9개 프로젝트를 동시에 돌리다 보니 '어제 뭐 했더라'부터 까먹기 시작했다.</p>",
+    project:["인프라"], type:"작업로그", action:"반영완료",
+    tags:["대시보드","GitHubPages","dev-hub"],
+    links:{github:"https://github.com/galincia-hub/dev-hub"}, memo:"",
+    publish:{blog_url:"",blog_date:"",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:9, status:"published", source:"claude-ai", date:"2026-04-03",
+    title:"[블로그] Week 1 — 바이브코딩, 그게 뭔데? Claude Code를 만나다",
+    excerpt:"바이브코딩이 뭔지도 모르고 시작한 첫 주.",
+    summary:"20년 넘게 여행업만 하다가, AI한테 밀릴 것 같아서 시작한 바이브코딩.",
+    body:"<h4>왜 시작했나</h4><p>회사에서 'AI 좀 써봐'라는 압박.</p><h4>첫 주</h4><ul><li>월: VS Code 설치</li><li>화: Claude Code 설치 → npm 에러 → 3시간</li><li>수: 설치 완료. '안녕 세계' 성공</li><li>목: 계산기 웹앱 성공. 충격.</li><li>금: 크루즈 가격 비교 도구 만들어볼까?</li></ul>",
+    project:["일반"], type:"회고", action:"반영완료",
+    tags:["바이브코딩","ClaudeCode","입문기"],
+    links:{blog:"https://galincia-hub.github.io/kangs-blog/blog/week1-vibe-coding.html"}, memo:"",
+    publish:{blog_url:"https://galincia-hub.github.io/kangs-blog/blog/week1-vibe-coding.html",blog_date:"2026-04-03",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  },
+  {
+    id:10, status:"published", source:"claude-ai", date:"2026-03-28",
+    title:"[블로그] Week 0 — 블로그를 왜 쓰나, 그리고 파게리는 누구인가",
+    excerpt:"첫 글. 짜파게티에서 온 필명 이야기.",
+    summary:"여행업 23년차 직장인이 왜 갑자기 코딩을 시작했는지.",
+    body:"<h4>이 블로그는</h4><p>유명해지려고 쓰는 블로그가 아니다. AI 시대에 비전문가가 어디까지 할 수 있는지 기록하는 곳.</p>",
+    project:["아카이빙/블로그"], type:"회고", action:"반영완료",
+    tags:["파게리","블로그시작"],
+    links:{blog:"https://galincia-hub.github.io/kangs-blog/blog/week0-intro.html"}, memo:"",
+    publish:{blog_url:"https://galincia-hub.github.io/kangs-blog/blog/week0-intro.html",blog_date:"2026-03-28",linkedin_draft:"",threads_draft:"",linkedin_posted:false,threads_posted:false}
+  }
+];
+
+// ── STATE ──
+let currentTab = "inbox";
+let selectedId = null;
+let activeProjects = new Set();
+let activeTypes = new Set();
+let activeActions = new Set();
+let searchQuery = "";
+let sortAsc = false;
+
+// ── INIT ──
+function init() {
+  const saved = localStorage.getItem('pagery-theme');
+  const el = document.documentElement;
+  const btn = document.querySelector('.theme-toggle');
+  if (saved === 'light') { el.removeAttribute('data-theme'); btn.textContent = '🌙'; }
+  else { el.setAttribute('data-theme','dark'); btn.textContent = '☀️'; }
+  renderFilters();
+  renderList();
+  updateCounts();
+}
+function toggleTheme() {
+  const el = document.documentElement; const btn = document.querySelector('.theme-toggle');
+  if (el.getAttribute('data-theme')==='dark') { el.removeAttribute('data-theme'); btn.textContent='🌙'; localStorage.setItem('pagery-theme','light'); }
+  else { el.setAttribute('data-theme','dark'); btn.textContent='☀️'; localStorage.setItem('pagery-theme','dark'); }
+}
+
+// ── TABS ──
+function switchTab(tab) {
+  currentTab = tab; selectedId = null;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  renderList(); showEmptyDetail();
+}
+function updateCounts() {
+  document.getElementById('count-inbox').textContent = archiveData.filter(d=>d.status==='inbox').length;
+  document.getElementById('count-shortlist').textContent = archiveData.filter(d=>d.status==='shortlist').length;
+  document.getElementById('count-published').textContent = archiveData.filter(d=>d.status==='published').length;
+}
+function toggleSort() { sortAsc=!sortAsc; document.getElementById('sortBtn').textContent = sortAsc?'↑ 오래된순':'↓ 최신순'; renderList(); }
+
+// ── 3차원 필터 렌더링 ──
+function renderFilters() {
+  // 프로젝트 대분류 추출
+  const allProjects = [...new Set(archiveData.flatMap(d=>d.project.map(p=>p.split('/')[0])))].sort();
+  const projectChips = allProjects.map(p =>
+    `<button class="tag-chip" data-dim="project" data-val="${p}" onclick="toggleFilter('project','${p}')">${p}</button>`
+  ).join('');
+  const typeChips = TYPE_LIST.map(t =>
+    `<button class="tag-chip" data-dim="type" data-val="${t}" onclick="toggleFilter('type','${t}')">@${t}</button>`
+  ).join('');
+  const actionChips = ACTION_LIST.map(a =>
+    `<button class="tag-chip" data-dim="action" data-val="${a}" data-action="${a}" onclick="toggleFilter('action','${a}')">!${a}</button>`
+  ).join('');
+  document.getElementById('filterSection').innerHTML = `
+    <div class="filter-row"><span class="filter-label">프로젝트</span><div class="filter-chips">${projectChips}</div></div>
+    <div class="filter-row"><span class="filter-label">유형</span><div class="filter-chips">${typeChips}</div></div>
+    <div class="filter-row"><span class="filter-label">상태</span><div class="filter-chips">${actionChips}</div></div>
+  `;
+}
+function toggleFilter(dim, val) {
+  const set = dim==='project' ? activeProjects : dim==='type' ? activeTypes : activeActions;
+  if (set.has(val)) set.delete(val); else set.add(val);
+  document.querySelectorAll(`.tag-chip[data-dim="${dim}"]`).forEach(chip => {
+    chip.classList.toggle('active', (dim==='project'?activeProjects:dim==='type'?activeTypes:activeActions).has(chip.dataset.val));
+  });
+  renderList();
+}
+
+// ── FILTER ──
+function filterCards() { searchQuery = document.getElementById('searchInput').value.toLowerCase(); renderList(); }
+function getFiltered() {
+  let items = archiveData.filter(d => {
+    if (d.status !== currentTab) return false;
+    // 차원 간 AND, 차원 내 OR
+    if (activeProjects.size > 0 && !d.project.some(p => [...activeProjects].some(ap => p.startsWith(ap)))) return false;
+    if (activeTypes.size > 0 && !activeTypes.has(d.type)) return false;
+    if (activeActions.size > 0 && !activeActions.has(d.action)) return false;
+    if (searchQuery) {
+      const hay = (d.title + d.excerpt + d.tags.join(' ') + d.project.join(' ') + d.type + d.action + d.body).toLowerCase();
+      if (!hay.includes(searchQuery)) return false;
+    }
+    return true;
+  });
+  items.sort((a,b) => sortAsc ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date));
+  return items;
+}
+
+function highlightText(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── RENDER LIST ──
+function renderList() {
+  const items = getFiltered();
+  const panel = document.getElementById('listPanel');
+  if (items.length === 0) { panel.innerHTML = '<div class="list-empty">표시할 항목이 없습니다</div>'; return; }
+  const sm = SOURCE_META;
+  panel.innerHTML = items.map(d => `
+    <div class="card ${selectedId===d.id?'selected':''}" onclick="selectCard(${d.id})">
+      <div class="card-color-bar ${d.source}"></div>
+      <div class="card-content">
+        <div class="card-meta">
+          <span class="source-badge ${d.source}">${sm[d.source].icon} ${sm[d.source].label}</span>
+          <span class="card-date">${d.date}</span>
+        </div>
+        <div class="card-title">${highlightText(escHtml(d.title), searchQuery)}</div>
+        <div class="card-excerpt">${highlightText(escHtml(d.excerpt), searchQuery)}</div>
+        <div class="card-dim-tags">
+          ${d.project.map(p=>`<span class="dim-project">${p}</span>`).join('')}
+          <span class="dim-type">@${d.type}</span>
+          <span class="action-pill ${d.action}">!${d.action}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showEmptyDetail() {
+  document.getElementById('detailPanel').innerHTML = '<div class="detail-empty"><span class="empty-icon">📋</span>글을 선택하면 여기에 표시됩니다</div>';
+}
+
+// ── DETAIL ──
+function selectCard(id) {
+  selectedId = id; renderList();
+  const d = archiveData.find(x=>x.id===id);
+  if (!d) return;
+  const sm = SOURCE_META;
+
+  // links 렌더링 (확장형)
+  let linksHtml = '';
+  for (const [k,v] of Object.entries(d.links)) {
+    if (k === 'related' && Array.isArray(v)) {
+      v.forEach((url,i) => { linksHtml += `<a href="${url}" target="_blank">🔗 관련 ${i+1}</a>`; });
+    } else if (v) {
+      const m = LINK_META[k] || {icon:'🔗',label:k};
+      linksHtml += `<a href="${v}" target="_blank">${m.icon} ${m.label}</a>`;
+    }
+  }
+
+  const statusBtns = d.status === 'inbox'
+    ? `<button class="btn btn-primary" onclick="moveStatus(${d.id},'shortlist')">→ 선별로 이동</button><button class="btn" onclick="moveStatus(${d.id},'published')">→ 바로 발행</button>`
+    : d.status === 'shortlist'
+    ? `<button class="btn btn-publish" onclick="moveStatus(${d.id},'published')">📝 블로그 발행</button><button class="btn" onclick="moveStatus(${d.id},'inbox')">← 수집으로</button>`
+    : `<button class="btn" onclick="moveStatus(${d.id},'shortlist')">← 선별로</button>`;
+
+  // 3차원 태그 표시
+  const dimHtml = `
+    <div class="dim-row"><span class="dim-row-label">프로젝트</span>${d.project.map(p=>`<span class="dtag">${p}</span>`).join('')}</div>
+    <div class="dim-row"><span class="dim-row-label">유형</span><span class="dtag">@${d.type}</span></div>
+    <div class="dim-row"><span class="dim-row-label">상태</span><span class="action-pill ${d.action}" style="font-size:11px;padding:2px 9px;">!${d.action}</span></div>
+  `;
+
+  // 보조 태그
+  const freeTagsHtml = d.tags.map((t,i) =>
+    `<span class="dtag">#${t}<button class="remove-tag" onclick="removeTag(${d.id},${i})">×</button></span>`
+  ).join('') +
+  `<button class="add-tag-btn" onclick="showTagInput(${d.id})">+ 태그</button>
+   <span class="tag-input-wrap" id="tagInput-${d.id}">
+     <input placeholder="태그명" onkeydown="if(event.key==='Enter')addTag(${d.id},this.value)">
+   </span>`;
+
+  document.getElementById('detailPanel').innerHTML = `
+    <div class="detail-header">
+      <div class="detail-meta">
+        <span class="source-badge ${d.source}">${sm[d.source].icon} ${sm[d.source].label}</span>
+        <span class="detail-date">${d.date}</span>
+      </div>
+      <h2>${d.title}</h2>
+    </div>
+    <div class="detail-summary"><h3>AI 요약</h3><p>${d.summary}</p></div>
+    <div class="detail-body">${d.body}</div>
+    <div class="detail-links">${linksHtml}</div>
+    <div class="detail-dimensions">${dimHtml}</div>
+    <div class="detail-free-tags">
+      <div class="dtag-label">보조 태그</div>
+      <div class="detail-free-tags-list">${freeTagsHtml}</div>
+    </div>
+    <div class="detail-memo">
+      <label>내 메모</label>
+      <textarea placeholder="메모를 입력하세요..." onchange="saveMemo(${d.id},this.value)">${d.memo}</textarea>
+    </div>
+    <div class="detail-actions">${statusBtns}</div>
+  `;
+}
+
+function moveStatus(id, ns) {
+  const item = archiveData.find(x=>x.id===id);
+  if (item) { item.status=ns; updateCounts(); switchTab(ns); selectCard(id); }
+}
+function saveMemo(id, val) { const item = archiveData.find(x=>x.id===id); if(item) item.memo=val; }
+function showTagInput(id) {
+  const el = document.getElementById('tagInput-'+id);
+  el.classList.toggle('show');
+  if (el.classList.contains('show')) el.querySelector('input').focus();
+}
+function addTag(id, val) {
+  val = val.trim(); if(!val) return;
+  const item = archiveData.find(x=>x.id===id);
+  if (item && !item.tags.includes(val)) { item.tags.push(val); selectCard(id); }
+}
+function removeTag(id, idx) {
+  const item = archiveData.find(x=>x.id===id);
+  if (item) { item.tags.splice(idx,1); selectCard(id); }
+}
+
+init();
+</script>
+</body>
+</html>
