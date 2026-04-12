@@ -129,7 +129,7 @@ nav .nav-links a:hover, nav .nav-links a.active { color:var(--text); }
 /* action 색상 */
 .tag-chip[data-action="후속작업/즉시"].active { background:var(--action-imm); color:#fff; }
 .tag-chip[data-action="후속작업/중기"].active { background:var(--action-mid); color:#fff; }
-.tag-chip[data-action="후속작업/장기"].active { background:var(--action-long); color:#fff; }
+.tag-chip[data-action="후속작업/말기"].active { background:var(--action-long); color:#fff; }
 .tag-chip[data-action="참고"].active { background:var(--action-ref); color:#fff; }
 .tag-chip[data-action="반영완료"].active { background:var(--action-done); color:#fff; }
 .tag-chip[data-action="보류"].active { background:var(--action-hold); color:#fff; }
@@ -167,7 +167,7 @@ nav .nav-links a:hover, nav .nav-links a.active { color:var(--text); }
 .action-pill { font-size:9.5px; font-weight:600; padding:1px 7px; border-radius:10px; color:#fff; }
 .action-pill[data-action="후속작업/즉시"] { background:var(--action-imm); }
 .action-pill[data-action="후속작업/중기"] { background:var(--action-mid); }
-.action-pill[data-action="후속작업/장기"] { background:var(--action-long); }
+.action-pill[data-action="후속작업/말기"] { background:var(--action-long); }
 .action-pill[data-action="참고"] { background:var(--action-ref); }
 .action-pill[data-action="반영완료"] { background:var(--action-done); }
 .action-pill[data-action="보류"] { background:var(--action-hold); }
@@ -321,7 +321,7 @@ const LINK_META = {
   related:     { icon:'🔗', label:'관련 링크' }
 };
 const TYPE_LIST = ['정보분석','작업로그','의사결정','트러블슈팅','설계','발견','회고'];
-const ACTION_LIST = ['후속작업/즉시','후속작업/중기','후속작업/장기','참고','반영완료','보류','폐기'];
+const ACTION_LIST = ['후속작업/즉시','후속작업/중기','후속작업/말기','참고','반영완료','보류','폐기'];
 const PROJECT_CATEGORIES = ['인프라','OpenClaw','투자','크루즈','로컬AI','아카이빙','일반'];
 
 // ── DATA: archive.json에서 로드 ──
