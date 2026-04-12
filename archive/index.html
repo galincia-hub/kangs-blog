@@ -30,10 +30,13 @@
   --source-lilys: #6d28d9;
   --source-memo: #78716c;
   --dim-label: #b0a898;
-  --action-todo: #d97706;
+  --action-imm: #dc2626;
+  --action-mid: #d97706;
+  --action-long: #2563eb;
   --action-ref: #6b7280;
   --action-done: #059669;
   --action-hold: #9333ea;
+  --action-discard: #a1a1aa;
   --font-sans: 'IBM Plex Sans KR', -apple-system, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --radius: 8px;
@@ -64,10 +67,13 @@
   --source-lilys: #b09aee;
   --source-memo: #a09a90;
   --dim-label: #6a6560;
-  --action-todo: #fbbf24;
+  --action-imm: #f87171;
+  --action-mid: #fbbf24;
+  --action-long: #60a5fa;
   --action-ref: #9ca3af;
   --action-done: #34d399;
   --action-hold: #c084fc;
+  --action-discard: #71717a;
   --shadow-card: 0 1px 3px rgba(0,0,0,0.15);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -121,10 +127,13 @@ nav .nav-links a:hover, nav .nav-links a.active { color:var(--text); }
 .tag-chip:hover { color:var(--text); }
 .tag-chip.active { background:var(--bg-tag-active); color:var(--text-tag-active); }
 /* action 색상 */
-.tag-chip[data-action="후속작업"].active { background:var(--action-todo); color:#fff; }
+.tag-chip[data-action="후속작업/즉시"].active { background:var(--action-imm); color:#fff; }
+.tag-chip[data-action="후속작업/중기"].active { background:var(--action-mid); color:#fff; }
+.tag-chip[data-action="후속작업/장기"].active { background:var(--action-long); color:#fff; }
 .tag-chip[data-action="참고"].active { background:var(--action-ref); color:#fff; }
 .tag-chip[data-action="반영완료"].active { background:var(--action-done); color:#fff; }
 .tag-chip[data-action="보류"].active { background:var(--action-hold); color:#fff; }
+.tag-chip[data-action="폐기"].active { background:var(--action-discard); color:#fff; }
 
 /* ── MAIN LAYOUT ── */
 .main-layout { display:grid; grid-template-columns:400px 1fr; gap:0; max-width:1440px; margin:0 auto; padding:0 28px 40px; min-height:calc(100vh - 300px); }
@@ -156,10 +165,13 @@ nav .nav-links a:hover, nav .nav-links a.active { color:var(--text); }
 .card-dim-tags .dim-project { font-size:10px; color:var(--accent); font-family:var(--font-mono); }
 .card-dim-tags .dim-type { font-size:10px; color:var(--text-secondary); font-family:var(--font-mono); }
 .action-pill { font-size:9.5px; font-weight:600; padding:1px 7px; border-radius:10px; color:#fff; }
-.action-pill.후속작업 { background:var(--action-todo); }
-.action-pill.참고 { background:var(--action-ref); }
-.action-pill.반영완료 { background:var(--action-done); }
-.action-pill.보류 { background:var(--action-hold); }
+.action-pill[data-action="후속작업/즉시"] { background:var(--action-imm); }
+.action-pill[data-action="후속작업/중기"] { background:var(--action-mid); }
+.action-pill[data-action="후속작업/장기"] { background:var(--action-long); }
+.action-pill[data-action="참고"] { background:var(--action-ref); }
+.action-pill[data-action="반영완료"] { background:var(--action-done); }
+.action-pill[data-action="보류"] { background:var(--action-hold); }
+.action-pill[data-action="폐기"] { background:var(--action-discard); }
 mark { background:var(--highlight); color:inherit; padding:0 1px; border-radius:2px; }
 .list-empty { padding:60px 16px; text-align:center; color:var(--text-secondary); font-size:13px; }
 
@@ -206,6 +218,23 @@ mark { background:var(--highlight); color:inherit; padding:0 1px; border-radius:
 .tag-input-wrap input:focus { border-color:var(--accent); }
 
 /* Memo */
+/* ── 차원 편집 드롭다운 ── */
+.dim-edit-select {
+  font-size:11.5px; font-family:var(--font-sans); padding:3px 8px;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--bg-input); color:var(--text); outline:none; cursor:pointer;
+  transition:border-color var(--transition);
+}
+.dim-edit-select:focus { border-color:var(--accent); }
+.dim-edit-select option { background:var(--bg-panel); color:var(--text); }
+.dim-project-input {
+  font-size:11.5px; font-family:var(--font-sans); padding:3px 8px; width:140px;
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  background:var(--bg-input); color:var(--text); outline:none;
+}
+.dim-project-input:focus { border-color:var(--accent); }
+.dim-add-project { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; font-size:11.5px; font-weight:500; border-radius:20px; background:transparent; border:1px dashed var(--border); color:var(--text-secondary); cursor:pointer; font-family:var(--font-sans); transition:all var(--transition); }
+.dim-add-project:hover { border-color:var(--accent); color:var(--accent); }
 .detail-memo { margin-bottom:18px; }
 .detail-memo label { display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:6px; }
 .detail-memo textarea { width:100%; min-height:70px; padding:10px 12px; font-size:13px; font-family:var(--font-sans); border:1px solid var(--border); border-radius:var(--radius); background:var(--bg-input); color:var(--text); resize:vertical; outline:none; transition:border-color var(--transition); }
@@ -292,7 +321,8 @@ const LINK_META = {
   related:     { icon:'🔗', label:'관련 링크' }
 };
 const TYPE_LIST = ['정보분석','작업로그','의사결정','트러블슈팅','설계','발견','회고'];
-const ACTION_LIST = ['후속작업','참고','반영완료','보류'];
+const ACTION_LIST = ['후속작업/즉시','후속작업/중기','후속작업/장기','참고','반영완료','보류','폐기'];
+const PROJECT_CATEGORIES = ['인프라','OpenClaw','투자','크루즈','로컬AI','아카이빙','일반'];
 
 // ── DATA: archive.json에서 로드 ──
 let archiveData = [];
@@ -420,7 +450,7 @@ function renderList() {
         <div class="card-dim-tags">
           ${d.project.map(p=>`<span class="dim-project">${p}</span>`).join('')}
           <span class="dim-type">@${d.type}</span>
-          <span class="action-pill ${d.action}">!${d.action}</span>
+          <span class="action-pill" data-action="${d.action}">!${d.action}</span>
         </div>
       </div>
     </div>
@@ -455,11 +485,29 @@ function selectCard(id) {
     ? `<button class="btn btn-publish" onclick="moveStatus(${d.id},'published')">📝 블로그 발행</button><button class="btn" onclick="moveStatus(${d.id},'inbox')">← 수집으로</button>`
     : `<button class="btn" onclick="moveStatus(${d.id},'shortlist')">← 선별로</button>`;
 
-  // 3차원 태그 표시
+  // 3차원 태그 — 편집 가능
+  const projectChips = d.project.map((p,i) =>
+    `<span class="dtag">${p}<button class="remove-tag" onclick="removeProject(${d.id},${i})">×</button></span>`
+  ).join('');
+  const projectAddHtml = d.project.length < 3 ?
+    `<button class="dim-add-project" onclick="showProjectInput(${d.id})">+ 프로젝트</button>
+     <span class="tag-input-wrap" id="projInput-${d.id}">
+       <input class="dim-project-input" list="projectList" placeholder="대분류/소분류" onkeydown="if(event.key==='Enter')addProject(${d.id},this.value)">
+     </span>
+     <datalist id="projectList">${PROJECT_CATEGORIES.map(c=>`<option value="${c}">`).join('')}</datalist>` : '';
+
+  const typeSelect = `<select class="dim-edit-select" onchange="changeType(${d.id},this.value)">
+    ${TYPE_LIST.map(t=>`<option value="${t}" ${d.type===t?'selected':''}>${t}</option>`).join('')}
+  </select>`;
+
+  const actionSelect = `<select class="dim-edit-select" onchange="changeAction(${d.id},this.value)">
+    ${ACTION_LIST.map(a=>`<option value="${a}" ${d.action===a?'selected':''}>${a}</option>`).join('')}
+  </select>`;
+
   const dimHtml = `
-    <div class="dim-row"><span class="dim-row-label">프로젝트</span>${d.project.map(p=>`<span class="dtag">${p}</span>`).join('')}</div>
-    <div class="dim-row"><span class="dim-row-label">유형</span><span class="dtag">@${d.type}</span></div>
-    <div class="dim-row"><span class="dim-row-label">상태</span><span class="action-pill ${d.action}" style="font-size:11px;padding:2px 9px;">!${d.action}</span></div>
+    <div class="dim-row"><span class="dim-row-label">프로젝트</span>${projectChips}${projectAddHtml}</div>
+    <div class="dim-row"><span class="dim-row-label">유형</span>${typeSelect}</div>
+    <div class="dim-row"><span class="dim-row-label">상태</span>${actionSelect} <span class="action-pill" data-action="${d.action}" style="font-size:11px;padding:2px 9px;">!${d.action}</span></div>
   `;
 
   // 보조 태그
@@ -500,6 +548,32 @@ function moveStatus(id, ns) {
   if (item) { item.status=ns; updateCounts(); switchTab(ns); selectCard(id); }
 }
 function saveMemo(id, val) { const item = archiveData.find(x=>x.id===id); if(item) item.memo=val; }
+
+// ── 차원 편집 ──
+function changeType(id, val) {
+  const item = archiveData.find(x=>x.id===id);
+  if (item) { item.type = val; renderFilters(); renderList(); selectCard(id); }
+}
+function changeAction(id, val) {
+  const item = archiveData.find(x=>x.id===id);
+  if (item) { item.action = val; renderFilters(); renderList(); selectCard(id); }
+}
+function removeProject(id, idx) {
+  const item = archiveData.find(x=>x.id===id);
+  if (item && item.project.length > 1) { item.project.splice(idx,1); renderFilters(); renderList(); selectCard(id); }
+  else if (item && item.project.length <= 1) { alert('프로젝트 태그는 최소 1개 필요합니다.'); }
+}
+function showProjectInput(id) {
+  const el = document.getElementById('projInput-'+id);
+  el.classList.toggle('show');
+  if (el.classList.contains('show')) el.querySelector('input').focus();
+}
+function addProject(id, val) {
+  val = val.trim(); if(!val) return;
+  const item = archiveData.find(x=>x.id===id);
+  if (item && item.project.length >= 3) { alert('프로젝트 태그는 최대 3개입니다.'); return; }
+  if (item && !item.project.includes(val)) { item.project.push(val); renderFilters(); renderList(); selectCard(id); }
+}
 function showTagInput(id) {
   const el = document.getElementById('tagInput-'+id);
   el.classList.toggle('show');
